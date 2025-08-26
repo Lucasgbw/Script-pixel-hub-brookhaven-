@@ -488,101 +488,120 @@ musicBox = Tab1:AddTextBox({
 local Section = Tab1:AddSection({"Ids funcionando!!🎵"})
 
 -- Variável para guardar o ID selecionado
-local SelectedID = nil  
+local SelectedID = nil
 
 local Dropdown = Tab1:AddDropdown({
-  Name = "IDS de músicas",
-  Description = "Selecione o <font color='rgb(88, 101, 242)'>Áudio</font>",
-  Options = {
-    ["bypassed"] = "84994008476716",
-    ["jersey"] = "94524508448994",
-    ["bypassed"] = "112487908830297",
-    ["W song"] = "110398899000118",
-    ["sounds of my dream (jumpstyle)"] = "107220571819089",
-    ["wth"] = "87628353249925",
-    ["NYAN CAT LOUD"] = "94247393385483",
-    ["beat"] = "109317774357031",
-    ["LOUD SONG"] = "83216085380006",
-    ["SLIDE"] = "130108792973868",
-    ["breakcore"] = "102606024002362",
-    ["Steven universe (cover chaka)"] = "76834562378901",
-    ["Bad Apple full song (99% real)"] = "133864992185435",
-    ["sus audio!!!!!!!!!!"] = "98179479769166",
-    ["bypassed song"] = "132556256284397",
-    ["good B0y"] = "82833883451531",
-    ["n word o:"] = "78237548893699",
-    ["intro?"] = "100387511408698",
-    ["passo bem solto (full song)"] = "70626485375251",
-    ["bypassed"] = "138148591773443",
-    ["bypassed"] = "138481681938948",
-    ["stay with me (full song real)"] = "130867828528278",
-    ["doomSHOOP"] = "106750621124046",
-    ["slackwoods loud"] = "8525745255",
-    ["car drip"] = "8854899077",
-    ["ZACH RABBIT - WORLD WIDE MASSACRE"] = "9087130609",
-    ["ww2 song"] = "108254832140939",
-    ["doomshop beat or idk"] = "864140695",
-    ["song"] = "8547854164",
-    ["mc holocaust"] = "2809353108",
-    ["Memphis Rap type beat"] = "107976923850048",
-    ["Doomshop"] = "123907861988079",
-    ["Type Beat"] = "84745102224610",
-    ["Memphis Rap Instr"] = "110702112597688",
-    ["Memphis Rap type beat"] = "87726428794890",
-    ["Type Beat"] = "80749640423571",
-    ["Idk beat"] = "118498168825366",
-    ["Idk Cool Beat"] = "96403072895021",
-    ["Beat"] = "133314546406963",
-    ["Fire Memphis Phonk"] = "104362531847018",
-    ["idk???"] = "116056588632846",
-    ["loud nword spam"] = "134330459190038",
-    ["bobby2pistolz - fck all nword"] = "95098497504226",
-    ["doomshop"] = "126733760143984",
-    ["lil boodang gay shit backup"] = "116948138165385",
-    ["lil boodang gay shit"] = "92028144794492",
-    ["joey street - sesame street"] = "128784976267137",
-    ["yung bratz - xxxtentation full"] = "96415762266433",
-    ["sadboyshaq - hedied (pt.2)"] = "97173189032263",
-    ["rare lungskull ???"] = "85377124824346",
-    ["loud ass cowbell beat"] = "114651840802379",
-    ["doomshop beat or idk???"] = "77562935961036",
-    ["shotgun willy - wendy"] = "116198562628583",
-    ["idk???"] = "106802187257577",
-    ["idk???"] = "130603157461027",
-    ["some loud ass 10 second rap"] = "94936666508518",
-    ["slashtapez"] = "138356090908010",
-    ["lil pimp 187 - pimp dat ho"] = "138685494117478",
-    ["jp jav sounds"] = "102453913102995",
-    ["gucci gang loop"] = "2547598538",
-    ["look at me - xxxtentaction"] = "131107293184621",
-    ["phonk"] = "97744904211218",
-    ["shotta flow bad quality"] = "70816527824441",
-    ["doomshop cowbell beat"] = "98729729304116",
-    ["comet idk"] = "121817544798287",
-    ["comet idk (alt)"] = "134812080886689",
-    ["south park nword"] = "128507831115651",
-    ["lit in this bitch by xxxtentacion full with swears"] = "96460829282621",
-    ["Frigo camela funk"] = "87635539433153",
-    ["bobombinin funk"] = "111543364511665",
-    ["that lil darkie song full with swears"] = "114403033423410"
-  },
-  Default = "84994008476716", 
-  Flag = "dropdown teste",
-  Callback = function(Value)
-    SelectedID = Value
-  end
+    Name = "IDS de músicas",
+    Description = "Selecione o <font color='rgb(88, 101, 242)'>Áudio</font>",
+    Options = {
+        ["bypassed"] = "84994008476716",
+        ["jersey"] = "94524508448994",
+        ["bypassed"] = "112487908830297",
+        ["W song"] = "110398899000118",
+        ["sounds of my dream (jumpstyle)"] = "107220571819089",
+        ["wth"] = "87628353249925",
+        ["NYAN CAT LOUD"] = "94247393385483",
+        ["beat"] = "109317774357031",
+        ["LOUD SONG"] = "83216085380006",
+        ["SLIDE"] = "130108792973868",
+        ["breakcore"] = "102606024002362",
+        ["Steven universe (cover chaka)"] = "76834562378901",
+        ["Bad Apple full song (99% real)"] = "133864992185435",
+        ["sus audio!!!!!!!!!!"] = "98179479769166",
+        ["bypassed song"] = "132556256284397",
+        ["good B0y"] = "82833883451531",
+        ["n word o:"] = "78237548893699",
+        ["intro?"] = "100387511408698",
+        ["passo bem solto (full song)"] = "70626485375251",
+        ["bypassed"] = "138148591773443",
+        ["bypassed"] = "138481681938948",
+        ["stay with me (full song real)"] = "130867828528278",
+        ["doomSHOOP"] = "106750621124046",
+        ["slackwoods loud"] = "8525745255",
+        ["car drip"] = "8854899077",
+        ["ZACH RABBIT - WORLD WIDE MASSACRE"] = "9087130609",
+        ["ww2 song"] = "108254832140939",
+        ["doomshop beat or idk"] = "864140695",
+        ["song"] = "8547854164",
+        ["mc holocaust"] = "2809353108",
+        ["Memphis Rap type beat"] = "107976923850048",
+        ["Doomshop"] = "123907861988079",
+        ["Type Beat"] = "84745102224610",
+        ["Memphis Rap Instr"] = "110702112597688",
+        ["Memphis Rap type beat"] = "87726428794890",
+        ["Type Beat"] = "80749640423571",
+        ["Idk beat"] = "118498168825366",
+        ["Idk Cool Beat"] = "96403072895021",
+        ["Beat"] = "133314546406963",
+        ["Fire Memphis Phonk"] = "104362531847018",
+        ["idk???"] = "116056588632846",
+        ["loud nword spam"] = "134330459190038",
+        ["bobby2pistolz - fck all nword"] = "95098497504226",
+        ["doomshop"] = "126733760143984",
+        ["lil boodang gay shit backup"] = "116948138165385",
+        ["lil boodang gay shit"] = "92028144794492",
+        ["joey street - sesame street"] = "128784976267137",
+        ["yung bratz - xxxtentation full"] = "96415762266433",
+        ["sadboyshaq - hedied (pt.2)"] = "97173189032263",
+        ["rare lungskull ???"] = "85377124824346",
+        ["loud ass cowbell beat"] = "114651840802379",
+        ["doomshop beat or idk???"] = "77562935961036",
+        ["shotgun willy - wendy"] = "116198562628583",
+        ["idk???"] = "106802187257577",
+        ["idk???"] = "130603157461027",
+        ["some loud ass 10 second rap"] = "94936666508518",
+        ["slashtapez"] = "138356090908010",
+        ["lil pimp 187 - pimp dat ho"] = "138685494117478",
+        ["jp jav sounds"] = "102453913102995",
+        ["gucci gang loop"] = "2547598538",
+        ["look at me - xxxtentaction"] = "131107293184621",
+        ["phonk"] = "97744904211218",
+        ["shotta flow bad quality"] = "70816527824441",
+        ["doomshop cowbell beat"] = "98729729304116",
+        ["comet idk"] = "121817544798287",
+        ["comet idk (alt)"] = "134812080886689",
+        ["south park nword"] = "128507831115651",
+        ["lit in this bitch by xxxtentacion full with swears"] = "96460829282621",
+        ["Frigo camela funk"] = "87635539433153",
+        ["bobombinin funk"] = "111543364511665",
+        ["that lil darkie song full with swears"] = "114403033423410",
+        -- Novos IDs adicionados
+        ["New Song 1"] = "94857261584834",
+        ["New Song 2"] = "71701052305256",
+        ["New Song 3"] = "128529679058488",
+        ["New Song 4"] = "82737147971523",
+        ["New Song 5"] = "130826845701324",
+        ["New Song 6"] = "71055309537215",
+        ["New Song 7"] = "124420421741287",
+        ["New Song 8"] = "135703252977174",
+        ["New Song 9"] = "131344160755402",
+        ["New Song 10"] = "118750888001463",
+        ["New Song 11"] = "134238529752505",
+        ["New Song 12"] = "119063510774364",
+        ["New Song 13"] = "118425592773242",
+        ["New Song 14"] = "98206529715838",
+        ["New Song 15"] = "110537904253290",
+        ["New Song 16"] = "12730670552777",
+        ["New Song 17"] = "8417000911951",
+        ["New Song 18"] = "116391783579226"
+    },
+    Default = "84994008476716",
+    Flag = "dropdown teste",
+    Callback = function(Value)
+        SelectedID = Value
+    end
 })
 
 Tab1:AddButton({"tocar a música selecionada", function(Value)
-  if SelectedID then
-    local args = {
-      "PickingVehicleMusicText",
-      SelectedID
-    }
-    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Player1sCa1r"):FireServer(unpack(args))
-  else
-    warn("Nenhum ID selecionado!")
-  end
+    if SelectedID then
+        local args = {
+            "PickingVehicleMusicText",
+            SelectedID
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Player1sCa1r"):FireServer(unpack(args))
+    else
+        warn("Nenhum ID selecionado!")
+    end
 end})
 
 local Section = Tab1:AddSection({"--------------"})
@@ -3607,105 +3626,125 @@ Tab1:AddTextBox({
 
 
 -- Variável para guardar o ID selecionado
+-- Variável para guardar o ID selecionado
 local SelectedID = nil  
 
 local Dropdown = Tab1:AddDropdown({
-  Name = "IDS de música",
-  Description = "Selecione o <font color='rgb(88, 101, 242)'>Áudio</font>",
-  Options = {
-    ["bypassed"] = "84994008476716",
-    ["jersey"] = "94524508448994",
-    ["bypassed"] = "112487908830297",
-    ["W song"] = "110398899000118",
-    ["sounds of my dream (jumpstyle)"] = "107220571819089",
-    ["wth"] = "87628353249925",
-    ["NYAN CAT LOUD"] = "94247393385483",
-    ["beat"] = "109317774357031",
-    ["LOUD SONG"] = "83216085380006",
-    ["SLIDE"] = "130108792973868",
-    ["breakcore"] = "102606024002362",
-    ["Steven universe (cover chaka)"] = "76834562378901",
-    ["Bad Apple full song (99% real)"] = "133864992185435",
-    ["sus audio!!!!!!!!!!"] = "98179479769166",
-    ["bypassed song"] = "132556256284397",
-    ["good B0y"] = "82833883451531",
-    ["n word o:"] = "78237548893699",
-    ["intro?"] = "100387511408698",
-    ["passo bem solto (full song)"] = "70626485375251",
-    ["bypassed"] = "138148591773443",
-    ["bypassed"] = "138481681938948",
-    ["stay with me (full song real)"] = "130867828528278",
-    ["doomSHOOP"] = "106750621124046",
-    ["slackwoods loud"] = "8525745255",
-    ["car drip"] = "8854899077",
-    ["ZACH RABBIT - WORLD WIDE MASSACRE"] = "9087130609",
-    ["ww2 song"] = "108254832140939",
-    ["doomshop beat or idk"] = "864140695",
-    ["song"] = "8547854164",
-    ["mc holocaust"] = "2809353108",
-    ["Memphis Rap type beat"] = "107976923850048",
-    ["Doomshop"] = "123907861988079",
-    ["Type Beat"] = "84745102224610",
-    ["Memphis Rap Instr"] = "110702112597688",
-    ["Memphis Rap type beat"] = "87726428794890",
-    ["Type Beat"] = "80749640423571",
-    ["Idk beat"] = "118498168825366",
-    ["Idk Cool Beat"] = "96403072895021",
-    ["Beat"] = "133314546406963",
-    ["Fire Memphis Phonk"] = "104362531847018",
-    ["idk???"] = "116056588632846",
-    ["loud nword spam"] = "134330459190038",
-    ["bobby2pistolz - fck all nword"] = "95098497504226",
-    ["doomshop"] = "126733760143984",
-    ["lil boodang gay shit backup"] = "116948138165385",
-    ["lil boodang gay shit"] = "92028144794492",
-    ["joey street - sesame street"] = "128784976267137",
-    ["yung bratz - xxxtentation full"] = "96415762266433",
-    ["sadboyshaq - hedied (pt.2)"] = "97173189032263",
-    ["rare lungskull ???"] = "85377124824346",
-    ["loud ass cowbell beat"] = "114651840802379",
-    ["doomshop beat or idk???"] = "77562935961036",
-    ["shotgun willy - wendy"] = "116198562628583",
-    ["idk???"] = "106802187257577",
-    ["idk???"] = "130603157461027",
-    ["some loud ass 10 second rap"] = "94936666508518",
-    ["slashtapez"] = "138356090908010",
-    ["lil pimp 187 - pimp dat ho"] = "138685494117478",
-    ["jp jav sounds"] = "102453913102995",
-    ["gucci gang loop"] = "2547598538",
-    ["look at me - xxxtentaction"] = "131107293184621",
-    ["phonk"] = "97744904211218",
-    ["shotta flow bad quality"] = "70816527824441",
-    ["doomshop cowbell beat"] = "98729729304116",
-    ["comet idk"] = "121817544798287",
-    ["comet idk (alt)"] = "134812080886689",
-    ["south park nword"] = "128507831115651",
-    ["lit in this bitch by xxxtentacion full with swears"] = "96460829282621",
-    ["Frigo camela funk"] = "87635539433153",
-    ["bobombinin funk"] = "111543364511665",
-    ["that lil darkie song full with swears"] = "114403033423410"
-  },
-  Default = "84994008476716", 
-  Flag = "dropdown teste",
-  Callback = function(Value)
-    SelectedID = Value
-  end
+    Name = "IDS de música",
+    Description = "Selecione o <font color='rgb(88, 101, 242)'>Áudio</font>",
+    Options = {
+        ["bypassed"] = "84994008476716",
+        ["jersey"] = "94524508448994",
+        ["bypassed"] = "112487908830297",
+        ["W song"] = "110398899000118",
+        ["sounds of my dream (jumpstyle)"] = "107220571819089",
+        ["wth"] = "87628353249925",
+        ["NYAN CAT LOUD"] = "94247393385483",
+        ["beat"] = "109317774357031",
+        ["LOUD SONG"] = "83216085380006",
+        ["SLIDE"] = "130108792973868",
+        ["breakcore"] = "102606024002362",
+        ["Steven universe (cover chaka)"] = "76834562378901",
+        ["Bad Apple full song (99% real)"] = "133864992185435",
+        ["sus audio!!!!!!!!!!"] = "98179479769166",
+        ["bypassed song"] = "132556256284397",
+        ["good B0y"] = "82833883451531",
+        ["n word o:"] = "78237548893699",
+        ["intro?"] = "100387511408698",
+        ["passo bem solto (full song)"] = "70626485375251",
+        ["bypassed"] = "138148591773443",
+        ["bypassed"] = "138481681938948",
+        ["stay with me (full song real)"] = "130867828528278",
+        ["doomSHOOP"] = "106750621124046",
+        ["slackwoods loud"] = "8525745255",
+        ["car drip"] = "8854899077",
+        ["ZACH RABBIT - WORLD WIDE MASSACRE"] = "9087130609",
+        ["ww2 song"] = "108254832140939",
+        ["doomshop beat or idk"] = "864140695",
+        ["song"] = "8547854164",
+        ["mc holocaust"] = "2809353108",
+        ["Memphis Rap type beat"] = "107976923850048",
+        ["Doomshop"] = "123907861988079",
+        ["Type Beat"] = "84745102224610",
+        ["Memphis Rap Instr"] = "110702112597688",
+        ["Memphis Rap type beat"] = "87726428794890",
+        ["Type Beat"] = "80749640423571",
+        ["Idk beat"] = "118498168825366",
+        ["Idk Cool Beat"] = "96403072895021",
+        ["Beat"] = "133314546406963",
+        ["Fire Memphis Phonk"] = "104362531847018",
+        ["idk???"] = "116056588632846",
+        ["loud nword spam"] = "134330459190038",
+        ["bobby2pistolz - fck all nword"] = "95098497504226",
+        ["doomshop"] = "126733760143984",
+        ["lil boodang gay shit backup"] = "116948138165385",
+        ["lil boodang gay shit"] = "92028144794492",
+        ["joey street - sesame street"] = "128784976267137",
+        ["yung bratz - xxxtentation full"] = "96415762266433",
+        ["sadboyshaq - hedied (pt.2)"] = "97173189032263",
+        ["rare lungskull ???"] = "85377124824346",
+        ["loud ass cowbell beat"] = "114651840802379",
+        ["doomshop beat or idk???"] = "77562935961036",
+        ["shotgun willy - wendy"] = "116198562628583",
+        ["idk???"] = "106802187257577",
+        ["idk???"] = "130603157461027",
+        ["some loud ass 10 second rap"] = "94936666508518",
+        ["slashtapez"] = "138356090908010",
+        ["lil pimp 187 - pimp dat ho"] = "138685494117478",
+        ["jp jav sounds"] = "102453913102995",
+        ["gucci gang loop"] = "2547598538",
+        ["look at me - xxxtentaction"] = "131107293184621",
+        ["phonk"] = "97744904211218",
+        ["shotta flow bad quality"] = "70816527824441",
+        ["doomshop cowbell beat"] = "98729729304116",
+        ["comet idk"] = "121817544798287",
+        ["comet idk (alt)"] = "134812080886689",
+        ["south park nword"] = "128507831115651",
+        ["lit in this bitch by xxxtentacion full with swears"] = "96460829282621",
+        ["Frigo camela funk"] = "87635539433153",
+        ["bobombinin funk"] = "111543364511665",
+        ["that lil darkie song full with swears"] = "114403033423410",
+        -- Novos IDs adicionados
+        ["New Song 1"] = "94857261584834",
+        ["New Song 2"] = "71701052305256",
+        ["New Song 3"] = "128529679058488",
+        ["New Song 4"] = "82737147971523",
+        ["New Song 5"] = "130826845701324",
+        ["New Song 6"] = "71055309537215",
+        ["New Song 7"] = "124420421741287",
+        ["New Song 8"] = "135703252977174",
+        ["New Song 9"] = "131344160755402",
+        ["New Song 10"] = "118750888001463",
+        ["New Song 11"] = "134238529752505",
+        ["New Song 12"] = "119063510774364",
+        ["New Song 13"] = "118425592773242",
+        ["New Song 14"] = "98206529715838",
+        ["New Song 15"] = "110537904253290",
+        ["New Song 16"] = "12730670552777",
+        ["New Song 17"] = "8417000911951",
+        ["New Song 18"] = "116391783579226"
+    },
+    Default = "84994008476716", 
+    Flag = "dropdown teste",
+    Callback = function(Value)
+        SelectedID = Value
+    end
 })
 
 Tab1:AddButton({
-  Name = "Play Selected ID",
-  Callback = function()
-    if SelectedID then
-        local args = {
-            "ToolMusicText",
-            SelectedID
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("PlayerToolEvent"):FireServer(unpack(args))
-        print("Playing ID:", SelectedID)
-    else
-        warn("Nenhum ID selecionado!")
+    Name = "Play Selected ID",
+    Callback = function()
+        if SelectedID then
+            local args = {
+                "ToolMusicText",
+                SelectedID
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("PlayerToolEvent"):FireServer(unpack(args))
+            print("Playing ID:", SelectedID)
+        else
+            warn("Nenhum ID selecionado!")
+        end
     end
-  end
 })
 
 -- eligenete rádio 
