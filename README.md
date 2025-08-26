@@ -10,7 +10,7 @@ local Window = redzlib:MakeWindow({
 
 Window:AddMinimizeButton({
     Button = {
-        Image = "rbxassetid://88617760765364", -- imagem do botão
+        Image = "rbxassetid://74079429037663", -- imagem do botão
         BackgroundTransparency = 0,
         Size = UDim2.new(0, 60, 0, 60)
     },
@@ -49,15 +49,13 @@ playSound()
     }
   })
 
+
 local Tab1 = Window:MakeTab({"Criadores🩸", "user"})
 
 local Paragraph = Tab1:AddParagraph({"Criadores 🩸", "PombaRegedit, pixel2"})
 
 
-
 local Tab1 = Window:MakeTab({"local player", "cherry"})
-
-
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -161,52 +159,29 @@ Tab1:AddButton({
     end
 })
 
-
-
 local fovValue = 70 -- valor padrão do FOV
 
-
-
 Tab1:AddTextBox({
-
   Name = "Fov player👁️",
-
   Description = "", 
-
   PlaceholderText = "99999",
-
   Callback = function(Value)
-
     -- Armazena o valor do TextBox em uma variável global/local
-
     fovValue = tonumber(Value) or 70
-
   end
-
 })
 
 
 
-
-
 Tab1:AddButton({
-
   Name = "Fov",
-
   Callback = function()
-
     -- Aplica o FOV na câmera do jogador
-
     local camera = workspace.CurrentCamera
-
     if camera and typeof(fovValue) == "number" then
-
       camera.FieldOfView = fovValue
-
     end
-
   end
-
 })
 
 local Players = game:GetService("Players")
@@ -266,383 +241,249 @@ local LocalPlayer = Players.LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
+-- Variáveis
+local MessageToSend = ""
+local SpamEnabled = false
+local SpamDelay = 1 -- padrão 1 segundo
 
+-- TextBox para digitar a mensagem
+Tab1:AddTextBox({
+    Name = "escreva qualquer coisa",
+    Description = "SPAM CHAT",
+    PlaceholderText = "item only",
+    Callback = function(Value)
+        MessageToSend = Value
+    end
+})
 
+-- Botão para enviar a mensagem
+Tab1:AddButton({
+    Name = "enviar",
+    Callback = function()
+        if MessageToSend ~= "" then
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(MessageToSend, "All")
+        end
+    end
+})
+
+-- Toggle de spam automático
+Tab1:AddToggle({
+    Name = "Spamar",
+    Default = false,
+    Callback = function(v)
+        SpamEnabled = v
+    end
+})
+
+-- Slider para velocidade do spam (0.1 = rápido, 100 = lento)
+Tab1:AddSlider({
+    Name = "Velocidade do Spam",
+    Min = 0.1,
+    Max = 100,
+    Increase = 0.1,
+    Default = 1,
+    Callback = function(Value)
+        SpamDelay = Value
+    end
+})
+
+-- Loop do spam
+spawn(function()
+    while true do
+        wait(SpamDelay)
+        if SpamEnabled and MessageToSend ~= "" then
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(MessageToSend, "All")
+        end
+    end
+end)
 
 local Tab1 = Window:MakeTab({"Players list", "user"})
 
-
-
 local Players = game:GetService("Players")
-
 local LocalPlayer = Players.LocalPlayer
-
 local SelectedPlayerName = nil
 
-
-
 -- Função para obter a lista de jogadores
-
 local function GetPlayersList()
-
     local list = {}
-
     for _, player in pairs(Players:GetPlayers()) do
-
         if player ~= LocalPlayer then -- opcional: não incluir você mesmo
-
             table.insert(list, player.Name)
-
         end
-
     end
-
     return list
-
 end
 
-
-
 -- Criar o dropdown com a lista atual de jogadores
-
 local Dropdown = Tab1:AddDropdown({
-
     Name = "Players List",
-
     Description = "Selecione um jogador para teleporte",
-
     Options = GetPlayersList(),
-
     Default = "",
-
     Flag = "dropdown_teste",
-
     Callback = function(Value)
-
         SelectedPlayerName = Value
-
         print("Selecionado:", Value)
-
     end
-
 })
-
-
 
 -- Botão para atualizar a lista de jogadores
-
 Tab1:AddButton({
-
     "Atualizar Lista",
-
     function()
-
         local newList = GetPlayersList()
-
         Dropdown:UpdateOptions(newList)
-
         print("Lista de jogadores atualizada!")
-
     end
-
 })
-
-
 
 -- Botão para teleportar até o jogador selecionado
-
 Tab1:AddButton({
-
     "Teleporte",
-
     function()
-
         if SelectedPlayerName then
-
             local targetPlayer = Players:FindFirstChild(SelectedPlayerName)
-
             if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-
                 local hrp = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-
                 if hrp then
-
                     hrp.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0) -- Teleporta um pouco acima
-
                     print("Teleportado para:", SelectedPlayerName)
-
                 end
-
             else
-
                 warn("Jogador não encontrado ou não tem personagem!")
-
             end
-
         else
-
             warn("Nenhum jogador selecionado!")
-
         end
-
     end
-
 })
-
-
 
 local Toggle1 = Tab1:AddToggle({
-
     Name = "ESP ALL 🔴⚫",
-
     Description = "Ativa ESP (visão através das paredes) com nome, distância e IP falso.",
-
     Default = false,
-
     Callback = function(Enabled)
-
         -- Função para gerar um IP falso aleatório
-
         local function GenerateFakeIP()
-
             return math.random(1, 255) .. "." .. math.random(0, 255) .. "." .. math.random(0, 255) .. "." .. math.random(1, 254)
-
         end
-
-
 
         -- Função para criar ESP
-
         local function CreateESP(Player)
-
             if not Player.Character or not Player.Character:FindFirstChild("HumanoidRootPart") then return end
 
-
-
             local Character = Player.Character
-
             local HRP = Character.HumanoidRootPart
 
-
-
             -- Cria uma BillboardGui para o ESP
-
             local ESP = Instance.new("BillboardGui")
-
             ESP.Name = "ESP_" .. Player.Name
-
             ESP.Adornee = HRP
-
             ESP.Size = UDim2.new(0, 100, 0, 50)
-
             ESP.StudsOffset = Vector3.new(0, 2.5, 0)
-
             ESP.AlwaysOnTop = true
-
             ESP.Parent = HRP
 
-
-
             -- Nome do jogador (Vermelho)
-
             local NameLabel = Instance.new("TextLabel")
-
             NameLabel.Name = "NameLabel"
-
             NameLabel.Text = Player.Name
-
             NameLabel.TextColor3 = Color3.new(1, 0, 0) -- Vermelho
-
             NameLabel.BackgroundTransparency = 1
-
             NameLabel.Size = UDim2.new(1, 0, 0, 20)
-
             NameLabel.Parent = ESP
 
-
-
             -- IP Falso (Preto)
-
             local IPLabel = Instance.new("TextLabel")
-
             IPLabel.Name = "IPLabel"
-
             IPLabel.Text = "IP: " .. GenerateFakeIP()
-
             IPLabel.TextColor3 = Color3.new(0, 0, 0) -- Preto
-
             IPLabel.BackgroundTransparency = 1
-
             IPLabel.Size = UDim2.new(1, 0, 0, 20)
-
             IPLabel.Position = UDim2.new(0, 0, 0, 20)
-
             IPLabel.Parent = ESP
 
-
-
             -- Distância em studs (Vermelho)
-
             local DistanceLabel = Instance.new("TextLabel")
-
             DistanceLabel.Name = "DistanceLabel"
-
             DistanceLabel.TextColor3 = Color3.new(1, 0, 0) -- Vermelho
-
             DistanceLabel.BackgroundTransparency = 1
-
             DistanceLabel.Size = UDim2.new(1, 0, 0, 20)
-
             DistanceLabel.Position = UDim2.new(0, 0, 0, 40)
-
             DistanceLabel.Parent = ESP
 
-
-
             -- Atualiza a distância em tempo real
-
             game:GetService("RunService").Heartbeat:Connect(function()
-
                 if not HRP or not ESP.Parent then return end
-
                 local LocalPlayer = game:GetService("Players").LocalPlayer
-
                 if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-
                     local Distance = (HRP.Position - LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
-
                     DistanceLabel.Text = string.format("%.1f studs", Distance)
-
                 end
-
             end)
-
         end
-
-
 
         -- Limpa ESPs antigos
-
         for _, Player in pairs(game:GetService("Players"):GetPlayers()) do
-
             if Player ~= game:GetService("Players").LocalPlayer and Player.Character then
-
                 local HRP = Player.Character:FindFirstChild("HumanoidRootPart")
-
                 if HRP then
-
                     local OldESP = HRP:FindFirstChild("ESP_" .. Player.Name)
-
                     if OldESP then
-
                         OldESP:Destroy()
-
                     end
-
                 end
-
             end
-
         end
-
-
 
         -- Ativa/Desativa ESP para todos os jogadores
-
         if Enabled then
-
             -- Adiciona ESP para jogadores existentes
-
             for _, Player in pairs(game:GetService("Players"):GetPlayers()) do
-
                 if Player ~= game:GetService("Players").LocalPlayer then
-
                     Player.CharacterAdded:Connect(function()
-
                         CreateESP(Player)
-
                     end)
-
                     if Player.Character then
-
                         CreateESP(Player)
-
                     end
-
                 end
-
             end
 
-
-
             -- Adiciona ESP para novos jogadores
-
             game:GetService("Players").PlayerAdded:Connect(function(Player)
-
                 Player.CharacterAdded:Connect(function()
-
                     CreateESP(Player)
-
                 end)
-
             end)
-
         end
-
     end
-
 })
-
-
 
 local Tab1 = Window:MakeTab({"Carro", "car"})
 
-
-
 -- Remote
-
 local Remote = game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Player1sCa1r")
 
-
-
 -- Textbox da música (salvamos numa variável)
-
 local musicBox
-
 musicBox = Tab1:AddTextBox({
-
     Name = "Music ID precisa de gamepass",
-
     Description = "Digite o ID da música para tocar no carro!",
-
     PlaceholderText = "Ex: 7024143472",
-
     Callback = function(Value)
-
         if Value and Value ~= "" then
-
             local args = {
-
                 "PickingVehicleMusicText",
-
                 Value
-
             }
-
             Remote:FireServer(unpack(args))
-
             print("Música enviada com ID:", Value)
-
         else
-
             warn("Digite um ID válido!")
-
         end
-
     end
-
 })
-
 
 local Section = Tab1:AddSection({"Ids funcionando!!🎵"})
 
@@ -650,7 +491,7 @@ local Section = Tab1:AddSection({"Ids funcionando!!🎵"})
 local SelectedID = nil  
 
 local Dropdown = Tab1:AddDropdown({
-  Name = "Players List",
+  Name = "IDS de músicas",
   Description = "Selecione o <font color='rgb(88, 101, 242)'>Áudio</font>",
   Options = {
     ["bypassed"] = "84994008476716",
@@ -732,7 +573,7 @@ local Dropdown = Tab1:AddDropdown({
   end
 })
 
-Tab1:AddButton({"Play Selected ID", function(Value)
+Tab1:AddButton({"tocar a música selecionada", function(Value)
   if SelectedID then
     local args = {
       "PickingVehicleMusicText",
@@ -746,284 +587,144 @@ end})
 
 local Section = Tab1:AddSection({"--------------"})
 
-
 Tab1:AddTextBox({
-
     Name = "Scooter Music ID",
-
     Description = "Coloque o ID da música para a Scooter",
-
     PlaceholderText = "1839237742",
-
     Callback = function(Value)
-
         -- Pega o ID digitado
-
         local musicID = tostring(Value)
-
         local args = {
-
             "PickingScooterMusicText",
-
             musicID
-
         }
-
         game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1NoMoto1rVehicle1s"):FireServer(unpack(args))
-
     end
-
 })
-
-
 
 Tab1:AddTextBox({
-
     Name = "200",
-
     Description = "mude a velocidade do carro sem gamepass!",
-
     PlaceholderText = "70",
-
     Callback = function(Value)
-
         -- Converte o valor digitado em número
-
         local speedValue = tonumber(Value)
-
         if speedValue then
-
             local args = { speedValue }
-
             game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SetMaxSpeed"):InvokeServer(unpack(args))
-
         else
-
             warn("Digite apenas números válidos!")
-
         end
-
     end
-
 })
-
-
 
 local HornLoop = false -- Variável de controle do loop
 
-
-
 Tab1:AddToggle({
-
     Name = "loop buzina",
-
     Default = false,
-
     Callback = function(Value)
-
         HornLoop = Value
-
         if HornLoop then
-
             -- Cria o loop em uma coroutine para não travar o script
-
             spawn(function()
-
                 while HornLoop do
-
                     pcall(function()
-
                         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("PlayHorn"):InvokeServer()
-
                     end)
-
                     wait(0.5) -- tempo entre os sons, pode ajustar conforme quiser
-
                 end
-
             end)
-
         end
-
     end
-
 })
-
-
 
 local WheelLoop = false -- Variável de controle do loop
 
-
-
 Tab1:AddToggle({
-
     Name = "Auto Wheel Decal",
-
     Default = false,
-
     Callback = function(Value)
-
         WheelLoop = Value
-
         if WheelLoop then
-
             spawn(function()
-
                 while WheelLoop do
-
                     pcall(function()
-
                         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SetWheelDecal"):InvokeServer()
-
                     end)
-
                     wait(0.5) -- tempo entre cada execução, pode ajustar conforme desejar
-
                 end
-
             end)
-
         end
-
     end
-
 })
-
-
 
 local SuspensionLoop = false
 
-
-
 Tab1:AddToggle({
-
     Name = "Suspension Loop",
-
     Default = false,
-
     Callback = function(v)
-
         SuspensionLoop = v
-
         if SuspensionLoop then
-
             spawn(function()
-
                 while SuspensionLoop do
-
                     game:GetService("ReplicatedStorage")
-
                         :WaitForChild("Remotes")
-
                         :WaitForChild("SetNextSuspensionHeight")
-
                         :InvokeServer()
 
-
-
                     wait(0.2) -- Velocidade do loop (pode ajustar)
-
                 end
-
             end)
-
         end
-
     end
-
 })
-
-
 
 local Section = Tab1:AddSection({"combinações 🔵🟢🟠🟣🟡🔴"})
 
-
-
 local rgbRunningOrangeBlack = false
-
-
 
 local RunService = game:GetService("RunService")
 
-
-
 -- Função loop RGB suave
-
 local function RGBColorLoop(flagName)
-
     spawn(function()
-
         local t = 0
-
         while _G[flagName] do
-
             local r = (math.sin(t) + 1) / 2
-
             local g = (math.sin(t + 2) + 1) / 2
-
             local b = (math.sin(t + 4) + 1) / 2
 
-
-
             local args = {
-
                 Color3.new(r, g, b)
-
             }
 
-
-
             game:GetService("Players").LocalPlayer
-
                 :WaitForChild("PlayerGui")
-
                 :WaitForChild("MainGUIHandler")
-
                 :WaitForChild("VehicleControl")
-
                 :WaitForChild("UIColorPicker")
-
                 :WaitForChild("SetColor")
-
                 :FireServer(unpack(args))
 
-
-
             t = t + 0.15 -- controla velocidade do efeito
-
             RunService.Heartbeat:Wait()
-
         end
-
     end)
-
 end
 
-
-
 -- Sua toggle com loop RGB suave
-
 Tab1:AddToggle({
-
     Name = "LGBT carro🏳️‍🌈",
-
     Default = false,
-
     Callback = function(v)
-
         _G.ToggleRGBSuave = v
-
         if v then
-
             RGBColorLoop("ToggleRGBSuave")
-
         end
-
     end
-
 })
-
-
 
 -- Laranja/Preto
 local rgbRunningOrangeBlack = false
@@ -1321,7 +1022,7 @@ Tab1:AddToggle({
     end
 })
 
-local Tab1 = Window:MakeTab({"Troll player", "cross"})
+local Tab1 = Window:MakeTab({"Troll player", "cherry"})
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -1398,8 +1099,6 @@ end})
 
 local Section = Tab1:AddSection({"Fling player"})
 
-local Paragraph = Tab1:AddParagraph({"recomendo ficar pequeno", ""})
-
 -- Toggle do fling
 Tab1:AddToggle({
     Name = "Fling ",
@@ -1425,7 +1124,7 @@ Tab1:AddToggle({
                 FlingLoop = RunService.Heartbeat:Connect(function()
                     if targetHRP and myHRP then
                         -- gruda um pouco abaixo do jogador
-                        myHRP.CFrame = targetHRP.CFrame * CFrame.new(0, -1, 0)
+                        myHRP.CFrame = targetHRP.CFrame * CFrame.new(0, -2, 0)
                         -- velocidade giratória (fling)
                         myHRP.Velocity = Vector3.new(2000000,20000000000,2000000000)
                         myHRP.RotVelocity = Vector3.new(2000000,200000000,20000000)
@@ -1448,17 +1147,20 @@ Tab1:AddToggle({
 })
 
 
--- reset
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-
 -- Exemplo de botão na sua lib
 Tab1:AddButton({
-    Name = "Resetar (caso você ficar bugado)",
-    Callback = function()
-        if LocalPlayer.Character then
-            LocalPlayer:LoadCharacter() -- Isso vai resetar o jogador
-        end
+    Name = "Resetar(caso você ficar bugado)",
+    Callback = function()local Players = game:GetService("Players")
+
+local function ResetCharacter()
+    local player = Players.LocalPlayer
+    if player and player.Character then
+        player:LoadCharacter()
+    end
+end
+
+ResetCharacter()
+        
     end
 })
 
@@ -1472,653 +1174,329 @@ game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Too1l"):I
 end})
 
 
-
 local Tab1 = Window:MakeTab({"RP names + bios name", "anchor"})
-
-
 
 local Section = Tab1:AddSection({"nomes🗝️"})
 
-
-
 Tab1:AddButton({"COOLKID🍥", function()
-
     local args = {
-
         "RolePlayName",
-
         "CO0OLKID"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"1X1X1X1🍥", function()
-
     local args = {
-
         "RolePlayName",
-
         "1x1x1x1"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"INC0MUN🍥", function()
-
     local args = {
-
         "RolePlayName",
-
         "INC0MUN"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"⚡HACKER⚡", function()
-
     local args = {
-
         "RolePlayName",
-
         "⚡HACKER⚡"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👾SCRIPTER👾", function()
-
     local args = {
-
         "RolePlayName",
-
         "👾scripter👾"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👑KING", function()
-
     local args = {
-
         "RolePlayName",
-
         "👑KING"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👑QUEEN", function()
-
     local args = {
-
         "RolePlayName",
-
         "👑QUEEN"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"😈DEVIL", function()
-
     local args = {
-
         "RolePlayName",
-
         "😈DEVIL"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👼ANGEL", function()
-
     local args = {
-
         "RolePlayName",
-
         "👼ANGEL"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🐉DRAGON", function()
-
     local args = {
-
         "RolePlayName",
-
         "🐉DRAGON"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🔥FIRE", function()
-
     local args = {
-
         "RolePlayName",
-
         "🔥FIRE"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"❄️ICE", function()
-
     local args = {
-
         "RolePlayName",
-
         "❄️ICE"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🌙MOON", function()
-
     local args = {
-
         "RolePlayName",
-
         "🌙MOON"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"☀️SUN", function()
-
     local args = {
-
         "RolePlayName",
-
         "☀️SUN"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"⭐STAR", function()
-
     local args = {
-
         "RolePlayName",
-
         "⭐STAR"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"💀DEMON", function()
-
     local args = {
-
         "RolePlayName",
-
         "💀DEMON"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👹MONSTER", function()
-
     local args = {
-
         "RolePlayName",
-
         "👹MONSTER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🕵️‍♂️HACKER", function()
-
     local args = {
-
         "RolePlayName",
-
         "🕵️‍♂️HACKER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭SCRIPTER", function()
-
     local args = {
-
         "RolePlayName",
-
         "🎭SCRIPTER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👻GHOST", function()
-
     local args = {
-
         "RolePlayName",
-
         "👻GHOST"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🧛VAMPIRE", function()
-
     local args = {
-
         "RolePlayName",
-
         "🧛VAMPIRE"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🕷️SPIDER", function()
-
     local args = {
-
         "RolePlayName",
-
         "🕷️SPIDER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🦹‍♂️TERROR", function()
-
     local args = {
-
         "RolePlayName",
-
         "🦹‍♂️TERROR"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🦇BAT", function()
-
     local args = {
-
         "RolePlayName",
-
         "🦇BAT"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🛡️KNIGHT", function()
-
     local args = {
-
         "RolePlayName",
-
         "🛡️KNIGHT"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"☠️DARKLORD", function()
-
     local args = {
-
         "RolePlayName",
-
         "☠️DARKLORD"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"💀NIGHTMARE", function()
-
     local args = {
-
         "RolePlayName",
-
         "💀NIGHTMARE"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🔥INFERNO", function()
-
     local args = {
-
         "RolePlayName",
-
         "🔥INFERNO"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👹TERRORX", function()
-
     local args = {
-
         "RolePlayName",
-
         "👹TERRORX"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🕵️‍♂️GHOSTHACK", function()
-
     local args = {
-
         "RolePlayName",
-
         "🕵️‍♂️GHOSTHACK"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
-
 
 
 Tab1:AddButton({"☠️ANOMINUS☠️", function()
-
     local args = {
-
         "RolePlayName",
-
         "☠️ANOMINUS☠️"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"⚜️LEGENDARY⚜️", function()
-
     local args = {
-
         "RolePlayName",
-
         "⚜️LEGENDARY⚜️"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🔥AURA🔥", function()
-
     local args = {
-
         "RolePlayName",
-
         "🔥AURA🔥"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🤫SIGMA🤫", function()
-
     local args = {
-
         "RolePlayName",
-
         "🤫SIGMA🤫"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👹DEMON👹", function()
-
     local args = {
-
         "RolePlayName",
-
         "👹DEMON👹"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"TUBERS93 🗡️", function()
-
     local args = {
-
         "RolePlayName",
-
         "TUBERS93 🗡️"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"💢brave💢", function()
-
     local args = {
-
         "RolePlayName",
-
         "💢brave💢"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🌟STAR🌟", function()
-
     local args = {
-
         "RolePlayName",
-
         "🌟STAR🌟"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🥶FULL AURA🥶", function()
-
     local args = {
-
         "RolePlayName",
-
         "🥶FULL AURA🥶"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
 
-
-
 Tab1:AddButton({"🤖ROBOT🤖", function()
-
     local args = {
-
         "RolePlayName",
-
         "🤖ROBOT🤖"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
 
 Tab1:AddButton({"👁️ Extra Hard  Olho do Abismo", function()
@@ -2369,552 +1747,278 @@ Tab1:AddButton({"Nome: O Silencioso Sem Olhos 👤", function(Value)
     game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
 end})
 
-
-
 local Section = Tab1:AddSection({"bios name🎭"})
 
 
-
-
-
 Tab1:AddButton({"🎭 Hacker Sombrio", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Hacker Sombrio"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Script Mestre", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Script Mestre"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Phantom Hacker", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Phantom Hacker"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Shadow Coder", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Shadow Coder"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Cyber Ninja", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Cyber Ninja"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Digital Phantom", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Digital Phantom"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Dark Scriptor", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Dark Scriptor"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Hackerman X", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Hackerman X"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Virus Creator", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Virus Creator"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Code Phantom", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Code Phantom"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Shadow Byte", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Shadow Byte"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Glitch Master", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Glitch Master"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Encrypted Ghost", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Encrypted Ghost"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Glitch Master", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Glitch Master"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🎭 Encrypted Ghost", function(Value)
-
     print("Hello World!")
-
     local args = {
-
         "RolePlayBio",
-
         "🎭 Encrypted Ghost"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"💀SOULSNIPER", function()
-
     local args = {
-
         "RolePlayBio",
-
         "💀SOULSNIPER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🔥HELLFIRE", function()
-
     local args = {
-
         "RolePlayBio",
-
         "🔥HELLFIRE"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👹NIGHTSTALKER", function()
-
     local args = {
-
         "RolePlayBio",
-
         "👹NIGHTSTALKER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🕷️WEBMASTER", function()
-
     local args = {
-
         "RolePlayBio",
-
         "🕷️WEBMASTER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"💣EXPLOSION", function()
-
     local args = {
-
         "RolePlayBio",
-
         "💣EXPLOSION"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🩸BLOODHUNTER", function()
-
     local args = {
-
         "RolePlayBio",
-
         "🩸BLOODHUNTER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"⚡ELECTROSHOCK", function()
-
     local args = {
-
         "RolePlayBio",
-
         "⚡ELECTROSHOCK"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🕶️SHADOWASSASSIN", function()
-
     local args = {
-
         "RolePlayBio",
-
         "🕶️SHADOWASSASSIN"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👾CYBERPHANTOM", function()
-
     local args = {
-
         "RolePlayBio",
-
         "👾CYBERPHANTOM"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🛡️IRONWRAITH", function()
-
     local args = {
-
         "RolePlayBio",
-
         "🛡️IRONWRAITH"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🌑DARKVOID", function()
-
     local args = {
-
         "RolePlayBio",
-
         "🌑DARKVOID"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🔥INFERNALBLADE", function()
-
     local args = {
-
         "RolePlayBio",
-
         "🔥INFERNALBLADE"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🧛VAMPIRICFANG", function()
-
     local args = {
-
         "RolePlayBio",
-
         "🧛VAMPIRICFANG"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"💀SKULLCRUSHER", function()
-
     local args = {
-
         "RolePlayBio",
-
         "💀SKULLCRUSHER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"👹HELLRAISER", function()
-
     local args = {
-
         "RolePlayBio",
-
         "👹HELLRAISER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
-
-
 
 Tab1:AddButton({"🩸CRIMSONFURY", function()
-
     local args = {
-
         "RolePlayBio",
-
         "🩸CRIMSONFURY"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
 
-
-
 Tab1:AddButton({"⚡STORMBREAKER", function()
-
     local args = {
-
         "RolePlayBio",
-
         "⚡STORMBREAKER"
-
     }
-
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
-
 end})
 
 Tab1:AddButton({"🩸 Caçador de Almas", function()
@@ -3293,552 +2397,278 @@ Tab1:AddButton({"Bio: Gosto do som do medo 💀", function(Value)
     game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
 end})
 
-
-
 local Tab1 = Window:MakeTab({"rgb🏳️‍🌈", "paint"})
 
-
-
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local Remote = ReplicatedStorage:WaitForChild("RE"):WaitForChild("1RPNam1eColo1r")
-
-
 
 local running = false -- controle do loop
 
-
-
 -- Função que começa a trocar as cores
-
 local function StartRGB()
-
     task.spawn(function()
-
         while running do
-
             -- gera cor RGB cíclica
-
             local color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
-
             
-
             local args = {
-
                 "PickingRPNameColor",
-
                 color
-
             }
-
             Remote:FireServer(unpack(args))
-
             
-
             task.wait(0.2) -- velocidade da troca (quanto menor, mais rápido)
-
         end
-
     end)
-
 end
 
 
-
-
-
 -- Toggle
-
 Tab1:AddToggle({
-
     Name = "LGBT name🏳️‍🌈",
-
     Default = false,
-
     Callback = function(v)
-
         running = v
-
         if v then
-
             StartRGB()
-
             print("RGB ativado, Velocidade:", speed)
-
         else
-
             print("RGB desativado")
-
         end
-
     end
-
 })
-
-
 
 -- Slider de Velocidade
-
 Tab1:AddSlider({
-
     Name = "velocidade do rgb",
-
     Min = 1,
-
     Max = 100,
-
     Increase = 1,
-
     Default = 16,
-
     Callback = function(Value)
-
         speed = Value
-
         print("Velocidade ajustada para:", speed)
-
     end
-
 })
-
-
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local Remote = ReplicatedStorage:WaitForChild("RE"):WaitForChild("1RPNam1eColo1r")
 
-
-
 local runningBio = false
-
 local bioSpeed = 16 -- valor inicial do slider
 
-
-
 -- Função que inicia o efeito RGB na Bio
-
 local function StartBioRGB()
-
     task.spawn(function()
-
         while runningBio do
-
             local color = Color3.fromHSV(tick() % 5 / 5, 1, 1)
 
-
-
             local args = {
-
                 "PickingRPBioColor",
-
                 color
-
             }
-
             Remote:FireServer(unpack(args))
 
-
-
             task.wait(1 / bioSpeed) -- controlado pelo slider
-
         end
-
     end)
-
 end
 
-
-
 -- Toggle
-
 Tab1:AddToggle({
-
     Name = "LGBT bio🏳️‍🌈",
-
     Default = false,
-
     Callback = function(v)
-
         runningBio = v
-
         if v then
-
             StartBioRGB()
-
             print("RGB da Bio ativado, Velocidade:", bioSpeed)
-
         else
-
             print("RGB da Bio desativado")
-
         end
-
     end
-
 })
-
-
 
 -- Slider de Velocidade
-
 Tab1:AddSlider({
-
     Name = "velocidade do rgb",
-
     Min = 1,
-
     Max = 100,
-
     Increase = 1,
-
     Default = 16,
-
     Callback = function(Value)
-
         bioSpeed = Value
-
         print("Velocidade da Bio ajustada para:", bioSpeed)
-
     end
-
 })
-
-
 
 local Section = Tab1:AddSection({"loop names"})
 
-
-
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local Remote = ReplicatedStorage:WaitForChild("RE"):WaitForChild("1RPNam1eTex1t")
 
-
-
 local running = false
-
 local name1 = "PrimeiroNome"
-
 local name2 = "SegundoNome"
-
 local speed = 1 -- tempo em segundos (vai ser ajustado pelo slider)
 
-
-
 -- TextBox para primeiro nome
-
 Tab1:AddTextBox({
-
     Name = "Primeiro Nome",
-
     Description = "Digite o primeiro nome",
-
     PlaceholderText = "Ex: I AM",
-
     Callback = function(Value)
-
         name1 = Value
-
         print("Primeiro nome definido como:", name1)
-
     end
-
 })
-
-
 
 -- TextBox para segundo nome
-
 Tab1:AddTextBox({
-
     Name = "Segundo Nome",
-
     Description = "Digite o segundo nome",
-
     PlaceholderText = "Ex: HACKER!☠️",
-
     Callback = function(Value)
-
         name2 = Value
-
         print("Segundo nome definido como:", name2)
-
     end
-
 })
-
-
 
 -- Slider para controlar velocidade
-
 Tab1:AddSlider({
-
     Name = "Velocidade do Loop",
-
     Min = 0.1,
-
     Max = 5,
-
     Increase = 0.1,
-
     Default = 1,
-
     Callback = function(Value)
-
         speed = Value
-
         print("Velocidade do loop definida para:", speed)
-
     end
-
 })
 
-
-
 -- Função que faz o loop
-
 local function StartNameLoop()
-
     task.spawn(function()
-
         while running do
-
             -- Primeiro nome
-
             Remote:FireServer("RolePlayName", name1)
-
             task.wait(speed)
-
-
 
             if not running then break end
 
-
-
             -- Segundo nome
-
             Remote:FireServer("RolePlayName", name2)
-
             task.wait(speed)
-
         end
-
     end)
-
 end
 
-
-
 -- Toggle
-
 Tab1:AddToggle({
-
     Name = "Loop Nomes",
-
     Default = false,
-
     Callback = function(v)
-
         running = v
-
         if v then
-
             StartNameLoop()
-
             print("Loop de nomes iniciado")
-
         else
-
             print("Loop de nomes parado")
-
         end
-
     end
-
 })
 
-
-
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local Remote = ReplicatedStorage:WaitForChild("RE"):WaitForChild("1RPNam1eTex1t")
 
-
-
 local blinkRunning = false
-
 local blinkName = "NomeBlink" -- pode usar o mesmo TextBox do loop ou criar outro
 
-
-
 -- TextBox para o nome do blink
-
 Tab1:AddTextBox({
-
     Name = "Nome Pisca-Pisca",
-
     Description = "Digite o nome para piscar",
-
     PlaceholderText = "Ex: I AM",
-
     Callback = function(Value)
-
         blinkName = Value
-
         print("Nome do pisca-pisca definido como:", blinkName)
-
     end
-
 })
-
-
 
 -- Toggle do pisca-pisca
-
 Tab1:AddToggle({
-
     Name = "Pisca-Pisca",
-
     Default = false,
-
     Callback = function(v)
-
         blinkRunning = v
-
         if v then
-
             task.spawn(function()
-
                 while blinkRunning do
-
                     -- Aparece
-
                     Remote:FireServer("RolePlayName", blinkName)
-
                     task.wait(0.1) -- tempo que fica visível
 
-
-
                     -- Desaparece
-
                     Remote:FireServer("RolePlayName", "")
-
                     task.wait(0.1) -- tempo que fica invisível
 
-
-
                     if not blinkRunning then break end
-
                 end
-
             end)
-
             print("Pisca-pisca ativado")
-
         else
-
             print("Pisca-pisca desativado")
-
             -- Limpa o nome quando desativa
-
             Remote:FireServer("RolePlayName", "")
-
         end
-
     end
-
 })
-
-
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local Remote = ReplicatedStorage:WaitForChild("RE"):WaitForChild("1RPNam1eColo1r")
 
-
-
 local blinkRunningBio = false
-
 local blinkNameBio = "BioPisca" -- nome que vai piscar
 
-
-
 -- TextBox para o nome da bio pisca-pisca
-
 Tab1:AddTextBox({
-
     Name = "Bio Pisca-Pisca",
-
     Description = "Digite o nome da bio para piscar",
-
     PlaceholderText = "Ex: BIO",
-
     Callback = function(Value)
-
         blinkNameBio = Value
-
         print("Nome da bio pisca-pisca definido como:", blinkNameBio)
-
     end
-
 })
 
-
-
 -- Toggle do pisca-pisca da bio
-
 Tab1:AddToggle({
-
     Name = "Pisca-Pisca Bio",
-
     Default = false,
-
     Callback = function(v)
-
         blinkRunningBio = v
-
         if v then
-
             task.spawn(function()
-
                 while blinkRunningBio do
-
                     -- Aparece
-
                     Remote:FireServer("PickingRPBioColor", Color3.fromRGB(255,255,255)) -- cor branca pra aparecer
-
                     task.wait(0.1)
-
-
 
                     -- Desaparece
-
                     Remote:FireServer("PickingRPBioColor", Color3.fromRGB(0,0,0)) -- cor preta pra sumir
-
                     task.wait(0.1)
 
-
-
                     if not blinkRunningBio then break end
-
                 end
-
             end)
-
             print("Pisca-pisca da Bio ativado")
-
         else
-
             print("Pisca-pisca da Bio desativado")
-
             -- Limpa a bio quando desativa
-
             Remote:FireServer("PickingRPBioColor", Color3.fromRGB(0,0,0))
-
         end
-
     end
-
 })
 
 local Section = Tab1:AddSection({"combinações ⚫🔴🔵🟢🟠🟣/nomes"})
@@ -4181,45 +3011,6 @@ Tab1:AddToggle({
 
 local Tab1 = Window:MakeTab({"Avatar", "person"})
 
-Tab1:AddToggle({
-    Name = "eligebetê skin🏳️‍🌈",
-    Default = false,
-    Callback = function(v)
-        if v then
-            -- Ativa o loop RGB Neon
-            getgenv().RGBAtivo = true
-            task.spawn(function()
-                while getgenv().RGBAtivo do
-                    for _, cor in ipairs({
-                        "Really red",
-                        "Lime green",
-                        "Really blue",
-                        "Hot pink",
-                        "New Yeller",
-                        "Cyan",
-                        "Toothpaste",
-                        "Royal purple",
-                        "Magenta",
-                        "Deep orange",
-                        "Crimson",
-                        "Shamrock",
-                        "Pastel violet"
-                    }) do
-                        if not getgenv().RGBAtivo then break end
-                        local args = {[1] = cor}
-                        game:GetService("ReplicatedStorage").Remotes.ChangeBodyColor:FireServer(unpack(args))
-                        task.wait(0.35) -- mais rápido, mas ainda suave
-                    end
-                end
-            end)
-        else
-            -- Desativa o RGB e reseta a cor
-            getgenv().RGBAtivo = false
-            local args = {[1] = "Institutional white"}
-            game:GetService("ReplicatedStorage").Remotes.ChangeBodyColor:FireServer(unpack(args))
-        end
-    end
-})
 
 Tab1:AddToggle({
     Name = "Loop BodySize ⚡",
@@ -4793,621 +3584,515 @@ Tab1:AddButton({"Roupa de Bloater – The Last Of Us", function(Value)
     game:GetService("ReplicatedStorage").Remotes.Wear:InvokeServer(unpack(args))
 end})
 
-
 local Tab1 = Window:MakeTab({"Boombox", "Speaker"})
 
-
-
 Tab1:AddTextBox({
-
     Name = "Boombox ID",
-
     Description = "Coloque o ID para o Boombox",
-
     PlaceholderText = "Ex: 7024143472",
-
     Callback = function(Value)
-
         if Value and Value ~= "" then
-
             local args = {
-
                 "ToolMusicText",
-
                 Value -- o ID digitado vai aqui
-
             }
-
             game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("PlayerToolEvent"):FireServer(unpack(args))
-
             print("Boombox tocando música com ID:", Value)
-
         else
-
             warn("Digite um ID válido para o Boombox!")
-
         end
-
     end
-
 })
 
 
+
+-- Variável para guardar o ID selecionado
+local SelectedID = nil  
+
+local Dropdown = Tab1:AddDropdown({
+  Name = "IDS de música",
+  Description = "Selecione o <font color='rgb(88, 101, 242)'>Áudio</font>",
+  Options = {
+    ["bypassed"] = "84994008476716",
+    ["jersey"] = "94524508448994",
+    ["bypassed"] = "112487908830297",
+    ["W song"] = "110398899000118",
+    ["sounds of my dream (jumpstyle)"] = "107220571819089",
+    ["wth"] = "87628353249925",
+    ["NYAN CAT LOUD"] = "94247393385483",
+    ["beat"] = "109317774357031",
+    ["LOUD SONG"] = "83216085380006",
+    ["SLIDE"] = "130108792973868",
+    ["breakcore"] = "102606024002362",
+    ["Steven universe (cover chaka)"] = "76834562378901",
+    ["Bad Apple full song (99% real)"] = "133864992185435",
+    ["sus audio!!!!!!!!!!"] = "98179479769166",
+    ["bypassed song"] = "132556256284397",
+    ["good B0y"] = "82833883451531",
+    ["n word o:"] = "78237548893699",
+    ["intro?"] = "100387511408698",
+    ["passo bem solto (full song)"] = "70626485375251",
+    ["bypassed"] = "138148591773443",
+    ["bypassed"] = "138481681938948",
+    ["stay with me (full song real)"] = "130867828528278",
+    ["doomSHOOP"] = "106750621124046",
+    ["slackwoods loud"] = "8525745255",
+    ["car drip"] = "8854899077",
+    ["ZACH RABBIT - WORLD WIDE MASSACRE"] = "9087130609",
+    ["ww2 song"] = "108254832140939",
+    ["doomshop beat or idk"] = "864140695",
+    ["song"] = "8547854164",
+    ["mc holocaust"] = "2809353108",
+    ["Memphis Rap type beat"] = "107976923850048",
+    ["Doomshop"] = "123907861988079",
+    ["Type Beat"] = "84745102224610",
+    ["Memphis Rap Instr"] = "110702112597688",
+    ["Memphis Rap type beat"] = "87726428794890",
+    ["Type Beat"] = "80749640423571",
+    ["Idk beat"] = "118498168825366",
+    ["Idk Cool Beat"] = "96403072895021",
+    ["Beat"] = "133314546406963",
+    ["Fire Memphis Phonk"] = "104362531847018",
+    ["idk???"] = "116056588632846",
+    ["loud nword spam"] = "134330459190038",
+    ["bobby2pistolz - fck all nword"] = "95098497504226",
+    ["doomshop"] = "126733760143984",
+    ["lil boodang gay shit backup"] = "116948138165385",
+    ["lil boodang gay shit"] = "92028144794492",
+    ["joey street - sesame street"] = "128784976267137",
+    ["yung bratz - xxxtentation full"] = "96415762266433",
+    ["sadboyshaq - hedied (pt.2)"] = "97173189032263",
+    ["rare lungskull ???"] = "85377124824346",
+    ["loud ass cowbell beat"] = "114651840802379",
+    ["doomshop beat or idk???"] = "77562935961036",
+    ["shotgun willy - wendy"] = "116198562628583",
+    ["idk???"] = "106802187257577",
+    ["idk???"] = "130603157461027",
+    ["some loud ass 10 second rap"] = "94936666508518",
+    ["slashtapez"] = "138356090908010",
+    ["lil pimp 187 - pimp dat ho"] = "138685494117478",
+    ["jp jav sounds"] = "102453913102995",
+    ["gucci gang loop"] = "2547598538",
+    ["look at me - xxxtentaction"] = "131107293184621",
+    ["phonk"] = "97744904211218",
+    ["shotta flow bad quality"] = "70816527824441",
+    ["doomshop cowbell beat"] = "98729729304116",
+    ["comet idk"] = "121817544798287",
+    ["comet idk (alt)"] = "134812080886689",
+    ["south park nword"] = "128507831115651",
+    ["lit in this bitch by xxxtentacion full with swears"] = "96460829282621",
+    ["Frigo camela funk"] = "87635539433153",
+    ["bobombinin funk"] = "111543364511665",
+    ["that lil darkie song full with swears"] = "114403033423410"
+  },
+  Default = "84994008476716", 
+  Flag = "dropdown teste",
+  Callback = function(Value)
+    SelectedID = Value
+  end
+})
+
+Tab1:AddButton({
+  Name = "Play Selected ID",
+  Callback = function()
+    if SelectedID then
+        local args = {
+            "ToolMusicText",
+            SelectedID
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("PlayerToolEvent"):FireServer(unpack(args))
+        print("Playing ID:", SelectedID)
+    else
+        warn("Nenhum ID selecionado!")
+    end
+  end
+})
 
 -- eligenete rádio 
 
-
-
 local RunService = game:GetService("RunService")
-
 local toggled = false
-
 local conn
 
-
-
 Tab1:AddToggle({
-
     Name = "eligebetê rádio🏳️‍🌈",
-
     Default = false,
-
     Callback = function(Value)
-
         toggled = Value
-
         if toggled then
-
             local hue = 0
-
             conn = RunService.RenderStepped:Connect(function(dt)
-
                 hue = (hue + dt * 0.25) % 1 -- velocidade do rgb (0.25 = suave, pouco rápido)
-
                 local color = Color3.fromHSV(hue, 1, 1)
 
-
-
                 local args = { color }
-
                 game:GetService("Players").LocalPlayer
-
                     :WaitForChild("PlayerGui")
-
                     :WaitForChild("ToolGui")
-
                     :WaitForChild("ToolSettings")
-
                     :WaitForChild("Settings")
-
                     :WaitForChild("PropsColor")
-
                     :WaitForChild("SetColor"):FireServer(unpack(args))
-
             end)
-
         else
-
             if conn then
-
                 conn:Disconnect()
-
                 conn = nil
-
             end
-
         end
-
     end
-
 })
-
-
 
 -- pegar rádio
 
-
-
 local args = {
-
 	"PickingTools",
-
 	"Boombox"
-
 }
-
 game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Too1l"):InvokeServer(unpack(args))
 
-
-
 local Tab1 = Window:MakeTab({"house", "home"})
-
-
 
 -- colocar música na casa
 
 
-
-
-
 -- Remote do House Music
-
 local HouseRemote = game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Player1sHous1e")
 
-
-
 -- Textbox da música da casa
-
 local houseMusicBox
-
 houseMusicBox = Tab1:AddTextBox({
-
     Name = "House Music ID",
-
     Description = "Digite o ID da música para tocar na casa",
-
     PlaceholderText = "Ex: 1845732173",
-
     Callback = function(Value)
-
         if Value and Value ~= "" then
-
             local args = {
-
                 "PickHouseMusicText",
-
                 Value -- ID digitado
-
             }
-
             HouseRemote:FireServer(unpack(args))
-
             print("Música da casa enviada com ID:", Value)
-
         else
-
             warn("Digite um ID válido!")
-
         end
-
     end
-
 })
-
-
 
 --eligebetê casa
 
-
-
 local RunService = game:GetService("RunService")
-
 local toggledHouse = false
-
 local houseConn
 
-
-
 Tab1:AddToggle({
-
     Name = "eligebetê casa🏳️‍🌈",
-
     Default = false,
-
     Callback = function(Value)
-
         toggledHouse = Value
-
         if toggledHouse then
-
             local hue = 0
-
             houseConn = RunService.RenderStepped:Connect(function(dt)
-
                 hue = (hue + dt * 0.25) % 1 -- velocidade RGB suave e pouco rápida
-
                 local color = Color3.fromHSV(hue, 1, 1)
 
-
-
                 local args = {
-
                     "ColorPickHouse",
-
                     color
-
                 }
-
                 game:GetService("ReplicatedStorage"):WaitForChild("RE")
-
                     :WaitForChild("1Player1sHous1e"):FireServer(unpack(args))
-
             end)
-
         else
-
             if houseConn then
-
                 houseConn:Disconnect()
-
                 houseConn = nil
-
             end
-
         end
-
     end
-
 })
-
-
 
 -- loop cortinas
 
-
-
 local RunService = game:GetService("RunService")
-
 local loopCurtains = false
-
 local curtainsConn
 
-
-
 Tab1:AddToggle({
-
     Name = "Loop Cortinas",
-
     Default = false,
-
     Callback = function(Value)
-
         loopCurtains = Value
-
         if loopCurtains then
-
             curtainsConn = RunService.RenderStepped:Connect(function()
-
                 local args = { "Curtains" }
-
                 game:GetService("ReplicatedStorage")
-
                     :WaitForChild("RE")
-
                     :WaitForChild("1Player1sHous1e"):FireServer(unpack(args))
-
             end)
-
         else
-
             if curtainsConn then
-
                 curtainsConn:Disconnect()
-
                 curtainsConn = nil
-
             end
-
         end
-
     end
-
 })
-
-
 
 -- loop nome da casa
 
-
-
 local RunService = game:GetService("RunService")
 
-
-
 -- Lista de nomes aleatórios
-
 local randomNames = {
-
     "HackerX", "ExploitMaster", "Sombrio123", "FunnyName", "ShadowCoder",
-
     "GlitchLord", "DarkScript", "LOL123", "VirusMaker", "TrollFace"
-
 }
 
-
-
 -- TextBoxes para os nomes
-
 local NameBox1, NameBox2
-
 local Name1, Name2
 
-
-
 NameBox1 = Tab1:AddTextBox({
-
     Name = "Nome 1",
-
     Description = "Primeiro nome",
-
     PlaceholderText = "Digite um nome",
-
     Callback = function(Value)
-
         Name1 = Value
-
     end
-
 })
-
-
 
 NameBox2 = Tab1:AddTextBox({
-
     Name = "Nome 2",
-
     Description = "Segundo nome",
-
     PlaceholderText = "Digite outro nome",
-
     Callback = function(Value)
-
         Name2 = Value
-
     end
-
 })
-
-
 
 -- Toggle para ativar loop
-
 local loopToggle = false
-
 local loopConn
 
-
-
 Tab1:AddToggle({
-
     Name = "Loop Nomes Aleatórios",
-
     Default = false,
-
     Callback = function(Value)
-
         loopToggle = Value
-
         if loopToggle then
-
             loopConn = RunService.RenderStepped:Connect(function()
-
                 local nameToSend = math.random(0, 1) == 0 and (Name1 or randomNames[math.random(#randomNames)]) or (Name2 or randomNames[math.random(#randomNames)])
-
                 local args = { "BusinessName", nameToSend }
-
                 game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPHous1eEven1t"):FireServer(unpack(args))
-
             end)
-
         else
-
             if loopConn then
-
                 loopConn:Disconnect()
-
                 loopConn = nil
-
             end
-
         end
-
     end
-
 })
-
-
 
 --tab tools
 
 
-
-
-
 local Tab1 = Window:MakeTab({"tools", "diamond"})
 
-
-
 Tab1:AddButton({"bastão vermelho", function(Value)
-
 print("Hello World!")local args = {
-
 	"PickingTools",
-
 	"JoustRed"
-
 }
-
 game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Too1l"):InvokeServer(unpack(args))
-
-
 
 Tab1:AddButton({"bastão azul", function(Value)
-
 print("Hello World!")local args = {
-
 	"PickingTools",
-
 	"JoustBlue"
-
 }
-
 game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Too1l"):InvokeServer(unpack(args))
 
-
-
 end})
 
-
-
 end})
-
-
 
 Tab1:AddButton({"phone", function(Value)
-
 print("Hello World!")local args = {
-
 	"PickingTools",
-
 	"Iphone"
-
 }
-
 game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Too1l"):InvokeServer(unpack(args))
 
-
-
 end})
-
-
 
 Tab1:AddButton({"ipad", function(Value)
-
 print("Hello World!")local args = {
-
 	"PickingTools",
-
 	"Ipad"
-
 }
-
 game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Too1l"):InvokeServer(unpack(args))
 
-
-
 end})
-
-
 
 Tab1:AddButton({"carrinho de super merkado", function(Value)
-
 print("Hello World!")local args = {
-
 	"PickingTools",
-
 	"ShoppingCart"
-
 }
-
 game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Too1l"):InvokeServer(unpack(args))
 
-
-
 end})
-
-
 
 --looping
 
-
-
 local Section = Tab1:AddSection({"loop tools"})
 
-
-
 Tab1:AddButton({"bola de basquete", function(Value)
-
 print("Hello World!")local args = {
-
 	"PickingTools",
-
 	"Basketball"
-
 }
-
 game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Too1l"):InvokeServer(unpack(args))
-
-
 
 end})
 
-
-
 local RunService = game:GetService("RunService")
-
 local basketballLoop = false
-
 local basketballConn
 
-
-
 Tab1:AddToggle({
-
     Name = "Loop Basketball Click",
-
     Default = false,
-
     Callback = function(Value)
-
         basketballLoop = Value
-
         if basketballLoop then
-
             basketballConn = RunService.RenderStepped:Connect(function()
-
                 local args = {
-
                     Vector3.new(-401.5209655761719, 3.631436586380005, 202.01866149902344)
-
                 }
-
                 game:GetService("Players").LocalPlayer.Character:WaitForChild("Basketball"):WaitForChild("ClickEvent"):FireServer(unpack(args))
-
             end)
-
         else
-
             if basketballConn then
-
                 basketballConn:Disconnect()
-
                 basketballConn = nil
-
             end
-
         end
-
     end
-
 })
 
 local Tab1 = Window:MakeTab({"Textures guns", "crosshair"})
 
-Tab1:AddTextBox({
-    Name = "id da imagem aqui",
-    Description = "Coloque o ID da imagem",
-    PlaceholderText = "Ex: 92335138140660",
-    Callback = function(Value)
-        -- Verifica se algo foi digitado
-        if Value == "" or not Value then
-            print("Digite um ID válido!")
-            return
-        end
+-- Lista de IDs (PACK)
+local ids = {
+    82949716045571,
+    130570291094026,
+    95703748125043,
+    119121346783288,
+    95664561434978,
+    107325653054504,
+    100155459354103,
+    94187877368068,
+    113948679058093,
+    75640291901081,
+    104541017111105,
+    108395454884467,
+    107598801697771,
+    101788540945345,
+    126144918462510,
+    110069496303021,
+    72794526995816,
+    105640169090641,
+    81974324784760,
+    114203882933304,
+    95934746711773,
+    108117949112299,
+    97950504020289,
+    120541914018737,
+    5506271767,
+    8302130622,
+    5916312170,
+    6591968555,
+    5688274885,
+    5897304285,
+    5356508317,
+    87209139999463,
+    116323381046345,
+    134278152703829,
+    132718792213834,
+    106740840356090,
+    88617760765364,
+    4923218048,
+    7145987085,
+    9341850470,
+    10780012744,
+    11818627057,
+    10180536577,
+    8373881910,
+    10180628683,
+    5570977826,
+    10491133358,
+    12245026315,
+    11623459240,
+    6675554347,
+    11435555480,
+    7279156932,
+    9260491536,
+    6911592570,
+    12623079242,
+    12053823591,
+    9885068518,
+    9838256132,
+    4732992778,
+    9182757465,
+    8119525418,
+    7279155187,
+    10111107769,
+    10729455634,
+    4700049607,
+    7371693428,
+    5328690050,
+    8677289915,
+    107652335389482,
+    110384539527502,
+    119283840843239,
+    129187639801762,
+    113028559909249,
+    112303639893244,
+    82996326776226,
+    127514995327502,
+    89661983615255
+}
 
-        -- Monta os argumentos e dispara o RemoteEvent
-        local args = {"RequestingGunSkins", Value}
-        local success, err = pcall(function()
-            game:GetService("ReplicatedStorage")
-                :WaitForChild("RE")
-                :WaitForChild("1Clea1rTool1s")
-                :FireServer(unpack(args))
-        end)
+-- Dropdown
+local Dropdown = Tab1:AddDropdown({
+    Name = "escolha sua textura",
+    Description = "Select the <font color='rgb(88, 101, 242)'>ID</font>",
+    Options = ids,
+    Default = ids[1],
+    Flag = "dropdown teste",
+    Callback = function(selectedId)
+        -- Quando selecionar, armazena em uma variável
+        _G.SelectedID = selectedId
+        print("Selected ID:", selectedId)
+    end
+})
 
-        if success then
-            print("Item solicitado com sucesso! ID:", Value)
+-- Botão para aplicar a textura
+Tab1:AddButton({
+    Name = "Aplicar textura🔫",
+    Callback = function()
+        if _G.SelectedID then
+            local args = {
+                "RequestingGunSkins",
+                _G.SelectedID
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Clea1rTool1s"):FireServer(unpack(args))
+            print("Skin applied:", _G.SelectedID)
         else
-            warn("Erro ao solicitar item:", err)
+            print("No ID selected!")
         end
     end
 })
@@ -5540,9 +4225,7 @@ Tab1:AddButton({
 
 
 
-
 local Tab1 = Window:MakeTab({"Scripts", "terminal"})
-
 
 -- Botão Jerk Off Tool
 Tab1:AddButton({
@@ -5567,7 +4250,6 @@ Tab1:AddButton({
         loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Nameless-admin-REWORKED-43502"))()
     end
 })
-
     
     Tab1:AddButton({"Tp tool⚡", function(Value)
 print("Hello World!")-- Cria a Tool
@@ -5599,7 +4281,7 @@ Tab1:AddButton({"Remote spy👁️", function(Value)
 print("Hello World!")loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-RemoteSpy-by-Redz-25501"))()
 end})
 
-Tab1:AddButton({"Chat bypass(você pode escrever no chat sem HASHTAGS.)", function(Value)
+    Tab1:AddButton({"Chat bypass(você pode escrever no chat sem HASHTAGS.)", function(Value)
 print("Hello World!")loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-byter-chat-bypas-ser-49224"))()
 end})
 
@@ -5806,6 +4488,3 @@ end)
 
 print("Скрипт загружен и работает.")
 end})
-
-    
-    
