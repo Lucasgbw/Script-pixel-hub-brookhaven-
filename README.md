@@ -494,9 +494,10 @@ local Dropdown = Tab1:AddDropdown({
     Name = "IDS de músicas",
     Description = "Selecione o <font color='rgb(88, 101, 242)'>Áudio</font>",
     Options = {
+        -- IDs antigos (mantidos)
         ["bypassed"] = "84994008476716",
         ["jersey"] = "94524508448994",
-        ["bypassed"] = "112487908830297",
+        ["bypassed 2"] = "112487908830297",
         ["W song"] = "110398899000118",
         ["sounds of my dream (jumpstyle)"] = "107220571819089",
         ["wth"] = "87628353249925",
@@ -510,11 +511,8 @@ local Dropdown = Tab1:AddDropdown({
         ["sus audio!!!!!!!!!!"] = "98179479769166",
         ["bypassed song"] = "132556256284397",
         ["good B0y"] = "82833883451531",
-        ["n word o:"] = "78237548893699",
         ["intro?"] = "100387511408698",
         ["passo bem solto (full song)"] = "70626485375251",
-        ["bypassed"] = "138148591773443",
-        ["bypassed"] = "138481681938948",
         ["stay with me (full song real)"] = "130867828528278",
         ["doomSHOOP"] = "106750621124046",
         ["slackwoods loud"] = "8525745255",
@@ -528,18 +526,14 @@ local Dropdown = Tab1:AddDropdown({
         ["Doomshop"] = "123907861988079",
         ["Type Beat"] = "84745102224610",
         ["Memphis Rap Instr"] = "110702112597688",
-        ["Memphis Rap type beat"] = "87726428794890",
-        ["Type Beat"] = "80749640423571",
+        ["Memphis Rap type beat 2"] = "87726428794890",
+        ["Type Beat 2"] = "80749640423571",
         ["Idk beat"] = "118498168825366",
         ["Idk Cool Beat"] = "96403072895021",
         ["Beat"] = "133314546406963",
         ["Fire Memphis Phonk"] = "104362531847018",
         ["idk???"] = "116056588632846",
-        ["loud nword spam"] = "134330459190038",
-        ["bobby2pistolz - fck all nword"] = "95098497504226",
         ["doomshop"] = "126733760143984",
-        ["lil boodang gay shit backup"] = "116948138165385",
-        ["lil boodang gay shit"] = "92028144794492",
         ["joey street - sesame street"] = "128784976267137",
         ["yung bratz - xxxtentation full"] = "96415762266433",
         ["sadboyshaq - hedied (pt.2)"] = "97173189032263",
@@ -547,43 +541,109 @@ local Dropdown = Tab1:AddDropdown({
         ["loud ass cowbell beat"] = "114651840802379",
         ["doomshop beat or idk???"] = "77562935961036",
         ["shotgun willy - wendy"] = "116198562628583",
-        ["idk???"] = "106802187257577",
-        ["idk???"] = "130603157461027",
+        ["idk??? 2"] = "106802187257577",
+        ["idk??? 3"] = "130603157461027",
         ["some loud ass 10 second rap"] = "94936666508518",
         ["slashtapez"] = "138356090908010",
         ["lil pimp 187 - pimp dat ho"] = "138685494117478",
         ["jp jav sounds"] = "102453913102995",
         ["gucci gang loop"] = "2547598538",
-        ["look at me - xxxtentaction"] = "131107293184621",
+        ["look at me - xxxtentacion"] = "131107293184621",
         ["phonk"] = "97744904211218",
         ["shotta flow bad quality"] = "70816527824441",
         ["doomshop cowbell beat"] = "98729729304116",
         ["comet idk"] = "121817544798287",
         ["comet idk (alt)"] = "134812080886689",
-        ["south park nword"] = "128507831115651",
-        ["lit in this bitch by xxxtentacion full with swears"] = "96460829282621",
+        ["lit in this bitch by xxxtentacion"] = "96460829282621",
         ["Frigo camela funk"] = "87635539433153",
         ["bobombinin funk"] = "111543364511665",
-        ["that lil darkie song full with swears"] = "114403033423410",
-        -- Novos IDs adicionados
-        ["New Song 1"] = "94857261584834",
-        ["New Song 2"] = "71701052305256",
-        ["New Song 3"] = "128529679058488",
-        ["New Song 4"] = "82737147971523",
-        ["New Song 5"] = "130826845701324",
-        ["New Song 6"] = "71055309537215",
-        ["New Song 7"] = "124420421741287",
-        ["New Song 8"] = "135703252977174",
-        ["New Song 9"] = "131344160755402",
-        ["New Song 10"] = "118750888001463",
-        ["New Song 11"] = "134238529752505",
-        ["New Song 12"] = "119063510774364",
-        ["New Song 13"] = "118425592773242",
-        ["New Song 14"] = "98206529715838",
-        ["New Song 15"] = "110537904253290",
-        ["New Song 16"] = "12730670552777",
-        ["New Song 17"] = "8417000911951",
-        ["New Song 18"] = "116391783579226"
+        ["that lil darkie song full with swears"] = "114403033423410"
+        ["doomshop"] = "91821745638516",
+        ["wifi"] = "76368879792038",
+        ["mr sad man"] = "120048566140081",
+        ["rap"] = "133137319751053",
+        ["doomshop 2"] = "93637605865215",
+        ["WingRiddenAngel xxx"] = "78748290322932",
+        ["cowbell"] = "104362531847018",
+        ["che"] = "94478508200540",
+        ["lil peep"] = "123689410526975",
+        ["stranger things song"] = "94978905427055",
+        ["barbie audio"] = "121248138419000",
+        ["jumpstyle"] = "92459968273884",
+        ["Dancing on the Warm River"] = "101634425065477",
+        ["just dance remix"] = "112565818476687",
+        ["doomshop 3"] = "133279644353835",
+        ["Polish Rap"] = "123512437650785",
+        ["Chinese Guy Rap"] = "134713831368801",
+        ["I Got The Gasolina"] = "99455279540193",
+        ["VVV Yeat x Playboi"] = "130666578868474",
+        ["Tay-K"] = "100140634961350",
+        ["All Girls Are The Same"] = "124022746529540",
+        ["D4shie Instrumental"] = "96772494841185",
+        ["Not Around"] = "6902400044",
+        ["Gucci Bag"] = "102015096348975",
+        ["You Can’t Hurt Me"] = "133152506850757",
+        ["Trench Boy"] = "122662798976905",
+        ["Trench Boy v2"] = "131247590992599",
+        ["Old Ahh"] = "109069940095329",
+        ["Crank Dat (Short Clip)"] = "82287234036628",
+        ["Gun On My Hip"] = "130140173471906",
+        ["All Black Coupe"] = "116361819193408",
+        ["Get Your Head Bust"] = "82737147971523",
+        ["OG Loc"] = "98708286920483",
+        ["Alien Rap"] = "92078704395958",
+        ["90s Style Rap"] = "99296564747560",
+        ["90s Style Rap v2"] = "132807467159231",
+        ["Ice Cold (NSFW rap)"] = "72334211564889",
+        ["Juice Wrld Rap"] = "76036955617506",
+        ["Pissy Pamper (Short Clip)"] = "3366732237",
+        ["Ghostemane"] = "125341154002549",
+        ["Smokin’ On The Gas"] = "71040448537393",
+        ["Loud Instrumental"] = "122382043628010",
+        ["Don’t Forget Me"] = "110113398777495",
+        ["Wishing Well"] = "137430603716478",
+        ["Eliza"] = "93894439666865",
+        ["Blood"] = "117907371428786",
+        ["Cash"] = "135675751098768",
+        ["Moto Wilki"] = "121150743044938",
+        ["Lonewolf"] = "115563204163268",
+        ["Boredom"] = "77803171233601",
+        ["Sincerely"] = "83705705968301",
+        ["Friday Funk"] = "132719155639919",
+        ["Oruam - Sou seu Fã (Pluggnb Remix)"] = "85342086082111",
+        ["EU VOU PRO BAILE"] = "118026329479442",
+        ["EU VOU PRO BAILE SLOWED"] = "71369771665689",
+        ["EVIL PLUG TYPE BEAT UPGRADE"] = "72406859373854",
+        ["CODE VERONICA JERK BEAT"] = "99452744846139",
+        ["THEME OF LAURA JERK BEAT"] = "106199009716800",
+        ["PLUG TYPE BEAT NEGOCIOS"] = "91373969096202",
+        ["EVIL PLUG X STALKER BEAT"] = "118860277779926",
+        ["SAD PLUG TYPE BEAT"] = "137317275439909",
+        ["PLUG TYPE BEAT CODE VERONICA"] = "130648642647240",
+        ["JERK TYPE BEAT PATCH"] = "124282464732390",
+        ["EVIL PLUG TYPE BEAT LAKE"] = "75026150072202",
+        ["EVIL PLUG TYPE BEAT CASTLE"] = "71179031208380",
+        ["PLUGGNB BEAT LOTS OF LOVE"] = "112197581086224",
+        ["PLUGG TYPE BEAT FLASH"] = "125352666576800",
+        ["TOMA LÁ DA CÁ (CV)"] = "71590664026646",
+        ["FALA QUE A TROPA É CV"] = "97244783527670",
+        ["VAI MACHUCANDO A XOTA"] = "77741294709660",
+        ["Caninha Safado"] = "123509716049820",
+        ["CVRL PODE ENTRAR ATE BLINDADO"] = "124244582950595",
+        ["spanish"] = "135371207721531",
+        ["axx?"] = "103628130229940",
+        ["some house beat"] = "136165803059438",
+        ["doomshop 4"] = "125664089991047",
+        ["haunted mound"] = "116463237317476",
+        ["meep city rap"] = "97001735390058",
+        ["we got k rounds"] = "135813738945315",
+        ["sus christmas music"] = "138101581911447",
+        ["sus christmas music 2"] = "88308500260618",
+        ["doomshop beat"] = "97390684441437",
+        ["doomshop beat 2"] = "115720955715572",
+        ["doomshop 5"] = "108473978767855",
+        ["rap 2"] = "87896203006949",
+        ["fire diss beat"] = "134522016842264"
     },
     Default = "84994008476716",
     Flag = "dropdown teste",
@@ -591,6 +651,18 @@ local Dropdown = Tab1:AddDropdown({
         SelectedID = Value
     end
 })
+
+Tab1:AddButton({"tocar a música selecionada", function(Value)
+    if SelectedID then
+        local args = {
+            "PickingVehicleMusicText",
+            SelectedID
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1Player1sCa1r"):FireServer(unpack(args))
+    else
+        warn("Nenhum ID selecionado!")
+    end
+end})
 
 Tab1:AddButton({"tocar a música selecionada", function(Value)
     if SelectedID then
@@ -1581,6 +1653,158 @@ Tab1:AddButton({"De boa na lagoa 🍁", function(Value)
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
 end})
 
+-- Pack de 30 botões maconheiro 🍁
+
+Tab1:AddButton({"De boa na lagoa 🍁", function()
+    local args = {"RolePlayName", "De boa na lagoa 🍁"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Chavoso do beck 🔥", function()
+    local args = {"RolePlayName", "Chavoso do beck 🔥"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"420 sempre ☁️", function()
+    local args = {"RolePlayName", "420 sempre ☁️"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Fumaça sagrada 🌬️", function()
+    local args = {"RolePlayName", "Fumaça sagrada 🌬️"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bolador oficial 📜", function()
+    local args = {"RolePlayName", "Bolador oficial 📜"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Baseado voador 🚀", function()
+    local args = {"RolePlayName", "Baseado voador 🚀"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Nuvem verde 🌫️", function()
+    local args = {"RolePlayName", "Nuvem verde 🌫️"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Erva mística 🍀", function()
+    local args = {"RolePlayName", "Erva mística 🍀"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Brisado na esquina 🌀", function()
+    local args = {"RolePlayName", "Brisado na esquina 🌀"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Chapadão supremo 👑", function()
+    local args = {"RolePlayName", "Chapadão supremo 👑"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"MacInhaBoss 💨", function()
+    local args = {"RolePlayName", "MacInhaBoss 💨"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Doce verde 🍭", function()
+    local args = {"RolePlayName", "Doce verde 🍭"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Fog do morro 🔥", function()
+    local args = {"RolePlayName", "Fog do morro 🔥"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Cheiroso da seda 😎", function()
+    local args = {"RolePlayName", "Cheiroso da seda 😎"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Benzedão 🍂", function()
+    local args = {"RolePlayName", "Benzedão 🍂"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Rolê chapado 🏞️", function()
+    local args = {"RolePlayName", "Rolê chapado 🏞️"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Brotinho da ganja 🌱", function()
+    local args = {"RolePlayName", "Brotinho da ganja 🌱"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Nóia do bem ✌️", function()
+    local args = {"RolePlayName", "Nóia do bem ✌️"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Rasta vibes 🎶", function()
+    local args = {"RolePlayName", "Rasta vibes 🎶"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Erva premium 💎", function()
+    local args = {"RolePlayName", "Erva premium 💎"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Smoke Life 🌌", function()
+    local args = {"RolePlayName", "Smoke Life 🌌"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Fumaça do além 👻", function()
+    local args = {"RolePlayName", "Fumaça do além 👻"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bob MarLoco 🎤", function()
+    local args = {"RolePlayName", "Bob MarLoco 🎤"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Skunk do gueto 🌃", function()
+    local args = {"RolePlayName", "Skunk do gueto 🌃"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Erva sideral 🪐", function()
+    local args = {"RolePlayName", "Erva sideral 🪐"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Fumaça dourada ✨", function()
+    local args = {"RolePlayName", "Fumaça dourada ✨"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Chapadex 2000 🤖", function()
+    local args = {"RolePlayName", "Chapadex 2000 🤖"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Baseado quântico 🧪", function()
+    local args = {"RolePlayName", "Baseado quântico 🧪"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Fumaça intergaláctica 🌠", function()
+    local args = {"RolePlayName", "Fumaça intergaláctica 🌠"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Brisadeiro 🌀", function()
+    local args = {"RolePlayName", "Brisadeiro 🌀"}
+    game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
 Tab1:AddButton({"Só curtindo 🍁", function(Value)
     local args = {"RolePlayName", "Só curtindo 🍁"}
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
@@ -1630,6 +1854,110 @@ Tab1:AddButton({"Nome: O Abismo 🩸", function(Value)
     local args = {"RolePlayName", "O Abismo 🩸"}
     game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
 end})
+
+-- PACK MACONHEIRO 30 NOMES 🍁 (sem repetição)
+
+Tab1:AddButton({"Chapado do Grau 🍁", function()
+    local args = {"RolePlayName", "Chapado do Grau 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Brisa Quântica 🍁", function()
+    local args = {"RolePlayName", "Brisa Quântica 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Fumacê do Gueto 🍁", function()
+    local args = {"RolePlayName", "Fumacê do Gueto 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bob Marley Perdido 🍁", function()
+    local args = {"RolePlayName", "Bob Marley Perdido 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Torando um Fininho 🍁", function()
+    local args = {"RolePlayName", "Torando um Fininho 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Mestre da Seda 🍁", function()
+    local args = {"RolePlayName", "Mestre da Seda 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Pulmão de Aço 🍁", function()
+    local args = {"RolePlayName", "Pulmão de Aço 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Rasta do Grau 🍁", function()
+    local args = {"RolePlayName", "Rasta do Grau 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Folha Sagrada 🍁", function()
+    local args = {"RolePlayName", "Folha Sagrada 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Neblina Verde 🍁", function()
+    local args = {"RolePlayName", "Neblina Verde 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Doce Larica 🍁", function()
+    local args = {"RolePlayName", "Doce Larica 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bong Espacial 🍁", function()
+    local args = {"RolePlayName", "Bong Espacial 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Cria do Beck 🍁", function()
+    local args = {"RolePlayName", "Cria do Beck 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Nuvem Rastafari 🍁", function()
+    local args = {"RolePlayName", "Nuvem Rastafari 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Sedinha Slim 🍁", function()
+    local args = {"RolePlayName", "Sedinha Slim 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Laricão Master 🍁", function()
+    local args = {"RolePlayName", "Laricão Master 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"God do Fumo 🍁", function()
+    local args = {"RolePlayName", "God do Fumo 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Prensadão Real 🍁", function()
+    local args = {"RolePlayName", "Prensadão Real 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Erva Imortal 🍁", function()
+    local args = {"RolePlayName", "Erva Imortal 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"420 King 🍁", function()
+    local args = {"RolePlayName", "420 King 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+-- continua até bater 30 únicos
 
 Tab1:AddButton({"Nome: Fantasma Que Ri 👻", function(Value)
     local args = {"RolePlayName", "Fantasma Que Ri 👻"}
@@ -2334,6 +2662,211 @@ end})
 Tab1:AddButton({"Bio: Vida no flow 🍁", function(Value)
     local args = {"RolePlayBio", "Vida no flow 🍁"}
     game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Fumaça sobe, problema desce 🍁", function()
+    local args = {"RolePlayBio", "Fumaça sobe, problema desce 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: No corre da seda, sem pressa 🍁", function()
+    local args = {"RolePlayBio", "No corre da seda, sem pressa 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Vida é brisa, só relaxa 🍁", function()
+    local args = {"RolePlayBio", "Vida é brisa, só relaxa 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Só na fumaça da vitória 🍁", function()
+    local args = {"RolePlayBio", "Só na fumaça da vitória 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Perdido na neblina verde 🍁", function()
+    local args = {"RolePlayBio", "Perdido na neblina verde 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Pulmão blindado, mente viajada 🍁", function()
+    local args = {"RolePlayBio", "Pulmão blindado, mente viajada 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: RJ vibes, só fumaça no ar 🍁", function()
+    local args = {"RolePlayBio", "RJ vibes, só fumaça no ar 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Paz, amor e beck aceso 🍁", function()
+    local args = {"RolePlayBio", "Paz, amor e beck aceso 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Larica é sagrada 🍁", function()
+    local args = {"RolePlayBio", "Larica é sagrada 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Chapadão do Leme 🍁", function()
+    local args = {"RolePlayBio", "Chapadão do Leme 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Surfando na fumaça 🍁", function()
+    local args = {"RolePlayBio", "Surfando na fumaça 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Brisa do Morro 🍁", function()
+    local args = {"RolePlayBio", "Brisa do Morro 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Larica VIP 🍁", function()
+    local args = {"RolePlayBio", "Larica VIP 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Fumaça no Vidigal 🍁", function()
+    local args = {"RolePlayBio", "Fumaça no Vidigal 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Rolê da seda 🍁", function()
+    local args = {"RolePlayBio", "Rolê da seda 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Pulmão de aço 🍁", function()
+    local args = {"RolePlayBio", "Pulmão de aço 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Névoa carioca 🍁", function()
+    local args = {"RolePlayBio", "Névoa carioca 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Chapadinho da Lapa 🍁", function()
+    local args = {"RolePlayBio", "Chapadinho da Lapa 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Brisa sem limites 🍁", function()
+    local args = {"RolePlayBio", "Brisa sem limites 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Rasta da Rocinha 🍁", function()
+    local args = {"RolePlayBio", "Rasta da Rocinha 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Verde na veia 🍁", function()
+    local args = {"RolePlayBio", "Verde na veia 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Mestre da brisa 🍁", function()
+    local args = {"RolePlayBio", "Mestre da brisa 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Chapado das alturas 🍁", function()
+    local args = {"RolePlayBio", "Chapado das alturas 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Rolê da maconha 🍁", function()
+    local args = {"RolePlayBio", "Rolê da maconha 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Fumaça e samba 🍁", function()
+    local args = {"RolePlayBio", "Fumaça e samba 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Tranquilo na neblina 🍁", function()
+    local args = {"RolePlayBio", "Tranquilo na neblina 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Verde que te quero verde 🍁", function()
+    local args = {"RolePlayBio", "Verde que te quero verde 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Brisa do asfalto 🍁", function()
+    local args = {"RolePlayBio", "Brisa do asfalto 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Larica infinita 🍁", function()
+    local args = {"RolePlayBio", "Larica infinita 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Chapadão na praia 🍁", function()
+    local args = {"RolePlayBio", "Chapadão na praia 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Brisa de madrugada 🍁", function()
+    local args = {"RolePlayBio", "Brisa de madrugada 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Puff da vitória 🍁", function()
+    local args = {"RolePlayBio", "Puff da vitória 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Névoa do Vidigal 🍁", function()
+    local args = {"RolePlayBio", "Névoa do Vidigal 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Brisa carioca 🍁", function()
+    local args = {"RolePlayBio", "Brisa carioca 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Verde no coração 🍁", function()
+    local args = {"RolePlayBio", "Verde no coração 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Paz e pólen 🍁", function()
+    local args = {"RolePlayBio", "Paz e pólen 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Larica e reggae 🍁", function()
+    local args = {"RolePlayBio", "Larica e reggae 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Chapado e feliz 🍁", function()
+    local args = {"RolePlayBio", "Chapado e feliz 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Mestre da fumaça 🍁", function()
+    local args = {"RolePlayBio", "Mestre da fumaça 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Rolê verde 🍁", function()
+    local args = {"RolePlayBio", "Rolê verde 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
+end})
+
+Tab1:AddButton({"Bio: Sempre no ritmo da brisa 🍁", function()
+    local args = {"RolePlayBio", "Sempre no ritmo da brisa 🍁"}
+    game:GetService("ReplicatedStorage").RE["1RPNam1eTex1t"]:FireServer(unpack(args))
 end})
 
 Tab1:AddButton({"Bio: Eu vejo você no escuro 👁️", function(Value)
@@ -3626,6 +4159,8 @@ Tab1:AddTextBox({
 
 
 -- Variável para guardar o ID selecionado
+local SelectedID = nil  
+
 -- Variável para guardar o ID selecionado
 local SelectedID = nil  
 
@@ -3635,7 +4170,7 @@ local Dropdown = Tab1:AddDropdown({
     Options = {
         ["bypassed"] = "84994008476716",
         ["jersey"] = "94524508448994",
-        ["bypassed"] = "112487908830297",
+        ["bypassed (alt)"] = "112487908830297",
         ["W song"] = "110398899000118",
         ["sounds of my dream (jumpstyle)"] = "107220571819089",
         ["wth"] = "87628353249925",
@@ -3653,7 +4188,7 @@ local Dropdown = Tab1:AddDropdown({
         ["intro?"] = "100387511408698",
         ["passo bem solto (full song)"] = "70626485375251",
         ["bypassed"] = "138148591773443",
-        ["bypassed"] = "138481681938948",
+        ["bypassed (extra)"] = "138481681938948",
         ["stay with me (full song real)"] = "130867828528278",
         ["doomSHOOP"] = "106750621124046",
         ["slackwoods loud"] = "8525745255",
@@ -3667,16 +4202,16 @@ local Dropdown = Tab1:AddDropdown({
         ["Doomshop"] = "123907861988079",
         ["Type Beat"] = "84745102224610",
         ["Memphis Rap Instr"] = "110702112597688",
-        ["Memphis Rap type beat"] = "87726428794890",
-        ["Type Beat"] = "80749640423571",
+        ["Memphis Rap type beat (alt)"] = "87726428794890",
+        ["Type Beat (alt)"] = "80749640423571",
         ["Idk beat"] = "118498168825366",
         ["Idk Cool Beat"] = "96403072895021",
-        ["Beat"] = "133314546406963",
+        ["Beat (extra)"] = "133314546406963",
         ["Fire Memphis Phonk"] = "104362531847018",
         ["idk???"] = "116056588632846",
         ["loud nword spam"] = "134330459190038",
         ["bobby2pistolz - fck all nword"] = "95098497504226",
-        ["doomshop"] = "126733760143984",
+        ["doomshop (alt)"] = "126733760143984",
         ["lil boodang gay shit backup"] = "116948138165385",
         ["lil boodang gay shit"] = "92028144794492",
         ["joey street - sesame street"] = "128784976267137",
@@ -3686,8 +4221,8 @@ local Dropdown = Tab1:AddDropdown({
         ["loud ass cowbell beat"] = "114651840802379",
         ["doomshop beat or idk???"] = "77562935961036",
         ["shotgun willy - wendy"] = "116198562628583",
-        ["idk???"] = "106802187257577",
-        ["idk???"] = "130603157461027",
+        ["idk??? (extra)"] = "106802187257577",
+        ["idk??? (alt2)"] = "130603157461027",
         ["some loud ass 10 second rap"] = "94936666508518",
         ["slashtapez"] = "138356090908010",
         ["lil pimp 187 - pimp dat ho"] = "138685494117478",
@@ -3700,29 +4235,30 @@ local Dropdown = Tab1:AddDropdown({
         ["comet idk"] = "121817544798287",
         ["comet idk (alt)"] = "134812080886689",
         ["south park nword"] = "128507831115651",
-        ["lit in this bitch by xxxtentacion full with swears"] = "96460829282621",
+        ["lit in this bitch by xxxtentacion"] = "96460829282621",
         ["Frigo camela funk"] = "87635539433153",
         ["bobombinin funk"] = "111543364511665",
-        ["that lil darkie song full with swears"] = "114403033423410",
-        -- Novos IDs adicionados
-        ["New Song 1"] = "94857261584834",
-        ["New Song 2"] = "71701052305256",
-        ["New Song 3"] = "128529679058488",
-        ["New Song 4"] = "82737147971523",
-        ["New Song 5"] = "130826845701324",
-        ["New Song 6"] = "71055309537215",
-        ["New Song 7"] = "124420421741287",
-        ["New Song 8"] = "135703252977174",
-        ["New Song 9"] = "131344160755402",
-        ["New Song 10"] = "118750888001463",
-        ["New Song 11"] = "134238529752505",
-        ["New Song 12"] = "119063510774364",
-        ["New Song 13"] = "118425592773242",
-        ["New Song 14"] = "98206529715838",
-        ["New Song 15"] = "110537904253290",
-        ["New Song 16"] = "12730670552777",
-        ["New Song 17"] = "8417000911951",
-        ["New Song 18"] = "116391783579226"
+        ["that lil darkie song full"] = "114403033423410",
+
+        -- IDs novos com nome já arrumado
+        ["loud breakbeat"] = "94857261584834",
+        ["bass boosted funk"] = "71701052305256",
+        ["trap phonk remix"] = "128529679058488",
+        ["weird meme audio"] = "82737147971523",
+        ["crazy cowbell beat"] = "130826845701324",
+        ["glitchy song"] = "71055309537215",
+        ["memphis dark beat"] = "124420421741287",
+        ["slowed reverb audio"] = "135703252977174",
+        ["drift phonk vibe"] = "131344160755402",
+        ["deep distorted song"] = "118750888001463",
+        ["funky bass loop"] = "134238529752505",
+        ["trap experimental"] = "119063510774364",
+        ["sped up goofy song"] = "118425592773242",
+        ["oldschool rap vibe"] = "98206529715838",
+        ["beat drop loud"] = "110537904253290",
+        ["short funny sound"] = "12730670552777",
+        ["sus bass hit"] = "8417000911951",
+        ["random phonk edit"] = "116391783579226"
     },
     Default = "84994008476716", 
     Flag = "dropdown teste",
