@@ -33,15 +33,7 @@ end
 -- Tocar o som assim que o script for executado
 playSound()
 
-local TextChatService = game:GetService("TextChatService")
 
--- Mensagem que você quer mandar
-local message = "👾Pixel Hub executado💉🩸"
-
--- Envia infinitamente sem limite
-while true do
-    TextChatService.TextChannels.RBXGeneral:SendAsync(message)
-end
 
   local Dialog = Window:Dialog({
     Title = "olá 👋",
