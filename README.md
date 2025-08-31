@@ -33,6 +33,12 @@ end
 -- Tocar o som assim que o script for executado
 playSound()
 
+local args = {
+    "RolePlayName",
+    "👾Pixel hub executado!💉🩸",
+    Color3.fromRGB(255,0,0) -- vermelho
+}
+game:GetService("ReplicatedStorage"):WaitForChild("RE"):WaitForChild("1RPNam1eTex1t"):FireServer(unpack(args))
 
 
   local Dialog = Window:Dialog({
@@ -240,8 +246,8 @@ end)
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
+local TextChatService = game:GetService("TextChatService")
 
 -- Variáveis
 local MessageToSend = ""
@@ -252,7 +258,7 @@ local SpamDelay = 1 -- padrão 1 segundo
 Tab1:AddTextBox({
     Name = "escreva qualquer coisa",
     Description = "SPAM CHAT",
-    PlaceholderText = "item only",
+    PlaceholderText = "mensagem aqui",
     Callback = function(Value)
         MessageToSend = Value
     end
@@ -263,7 +269,8 @@ Tab1:AddButton({
     Name = "enviar",
     Callback = function()
         if MessageToSend ~= "" then
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(MessageToSend, "All")
+            local chatChannel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+            chatChannel:SendAsync(MessageToSend)
         end
     end
 })
@@ -277,7 +284,7 @@ Tab1:AddToggle({
     end
 })
 
--- Slider para velocidade do spam (0.1 = rápido, 100 = lento)
+-- Slider para velocidade do spam
 Tab1:AddSlider({
     Name = "Velocidade do Spam",
     Min = 0.1,
@@ -294,7 +301,8 @@ spawn(function()
     while true do
         wait(SpamDelay)
         if SpamEnabled and MessageToSend ~= "" then
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(MessageToSend, "All")
+            local chatChannel = TextChatService:WaitForChild("TextChannels"):WaitForChild("RBXGeneral")
+            chatChannel:SendAsync(MessageToSend)
         end
     end
 end)
@@ -3605,6 +3613,30 @@ Tab1:AddButton({"Roupa de Bloater – The Last Of Us", function(Value)
     game:GetService("ReplicatedStorage").Remotes.Wear:InvokeServer(unpack(args))
 end})
 
+local Tab1 = Window:MakeTab({"vr", "airplay"})
+
+local Section = Tab1:AddSection({"use óculosvr(script)"})
+
+Tab1:AddButton({"equipar braço direito", function(Value)
+print("Hello World!")local args = {
+	84451219120140
+}
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Wear"):InvokeServer(unpack(args))
+
+end})
+
+Tab1:AddButton({"Equipar braço(esquerda)", function(Value)
+print("Hello World!")local args = {
+	72292903231768
+}
+game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Wear"):InvokeServer(unpack(args))
+
+end})
+
+Tab1:AddButton({"usar vr!", function(Value)
+print("Hello World!")loadstring(game:HttpGet("https://raw.githubusercontent.com/randomstring0/Qwerty/refs/heads/main/qwerty45.lua"))()
+end})
+
 local Tab1 = Window:MakeTab({"Boombox", "Speaker"})
 
 Tab1:AddTextBox({
@@ -4530,3 +4562,6 @@ print("Скрипт загружен и работает.")
 end})
     
     
+Tab1:AddButton({"pixel chat spam💉🩸", function(Value)
+print("Hello World!")loadstring(game:HttpGet("https://raw.githubusercontent.com/Lucasgbw/Chat-spam-pixel-hub-/refs/heads/main/2025%20new"))()
+end})
