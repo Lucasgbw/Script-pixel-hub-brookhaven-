@@ -10,7 +10,7 @@ local Window = redzlib:MakeWindow({
 
 Window:AddMinimizeButton({
     Button = {
-        Image = "rbxassetid://88617760765364", -- imagem do botão
+        Image = "rbxassetid://138399170661737", -- imagem do botão
         BackgroundTransparency = 0,
         Size = UDim2.new(0, 60, 0, 60)
     },
@@ -20,7 +20,7 @@ Window:AddMinimizeButton({
 })
 
 -- ID do som a ser reproduzido quando o código for executado
-local soundId = "rbxassetid://1836973601"
+local soundId = "rbxassetid://125090389445721"
 
 -- Função para tocar o som
 local function playSound()
