@@ -63,134 +63,91 @@ local Tab1 = Window:MakeTab({"Criadores🩸", "user"})
 local Paragraph = Tab1:AddParagraph({"Criadores 🩸", "PombaRegedit, pixel2"})
 
 
-local Tab1 = Window:MakeTab({"local player", "cherry"})
+local Tab1 = Window:MakeTab({"local player", "user"})
 
+-- Serviços
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local Camera = workspace.CurrentCamera
 local RunService = game:GetService("RunService")
-
-local WalkSpeedValue = 16
-local JumpPowerValue = 50
-
--- Slider de Velocidade
-Tab1:AddSlider({
-  Name = "Velocidade 🏁",
-  Min = 1,
-  Max = 1000,
-  Increase = 1,
-  Default = 16,
-  Callback = function(Value)
-    WalkSpeedValue = Value
-    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
-      LocalPlayer.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = WalkSpeedValue
-    end
-  end
-})
-
--- Slider de Pulo
-Tab1:AddSlider({
-  Name = "Pulo 🦘",
-  Min = 1,
-  Max = 1000,
-  Increase = 1,
-  Default = 50,
-  Callback = function(Value)
-    JumpPowerValue = Value
-    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
-      LocalPlayer.Character:FindFirstChildOfClass("Humanoid").JumpPower = JumpPowerValue
-    end
-  end
-})
-
--- Loop para manter valores mesmo após respawn/morte
-RunService.Stepped:Connect(function()
-  if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
-    local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    if humanoid.WalkSpeed ~= WalkSpeedValue then
-      humanoid.WalkSpeed = WalkSpeedValue
-    end
-    if humanoid.JumpPower ~= JumpPowerValue then
-      humanoid.JumpPower = JumpPowerValue
-    end
-  end
-end)
-
-local Workspace = game:GetService("Workspace")
-local RunService = game:GetService("RunService")
-
-local GravityValue = Workspace.Gravity
-
-Tab1:AddSlider({
-    Name = "Gravidade 🌎",
-    Min = 0,
-    Max = 500,
-    Increase = 1,
-    Default = Workspace.Gravity,
-    Callback = function(Value)
-        GravityValue = Value
-        Workspace.Gravity = GravityValue
-    end
-})
-
--- Loop para manter a gravidade
-RunService.Stepped:Connect(function()
-    if Workspace.Gravity ~= GravityValue then
-        Workspace.Gravity = GravityValue
-    end
-end)
 
 -- Valores padrão
-local DefaultWalkSpeed = 16
-local DefaultJumpPower = 50
-local DefaultGravity = 196.2
+local defaultWalkSpeed = Humanoid.WalkSpeed
+local defaultJumpPower = Humanoid.JumpPower
+local defaultGravity = workspace.Gravity
+local defaultFOV = Camera.FieldOfView
 
--- Botão para resetar Velocidade, Pulo e Gravidade
-Tab1:AddButton({
-    Name = "Resetar Velocidade, Pulo e Gravidade",
-    Callback = function()
-        -- Resetar variáveis
-        WalkSpeedValue = DefaultWalkSpeed
-        JumpPowerValue = DefaultJumpPower
-        GravityValue = DefaultGravity
+-- Variáveis que vamos manter em loop
+local speedValue = defaultWalkSpeed
+local jumpValue = defaultJumpPower
+local gravityValue = defaultGravity
+local fovValue = defaultFOV
 
-        -- Aplicar no humanoide do jogador
-        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
-            local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-            humanoid.WalkSpeed = WalkSpeedValue
-            humanoid.JumpPower = JumpPowerValue
-        end
+-- Loop para aplicar sempre
+RunService.RenderStepped:Connect(function()
+    Humanoid.WalkSpeed = speedValue
+    Humanoid.JumpPower = jumpValue
+    workspace.Gravity = gravityValue
+    Camera.FieldOfView = fovValue
+end)
 
-        -- Aplicar gravidade
-        Workspace.Gravity = GravityValue
-
-        print("Velocidade, Pulo e Gravidade resetados para os padrões.")
-    end
-})
-
-local fovValue = 70 -- valor padrão do FOV
-
+-- Velocidade
 Tab1:AddTextBox({
-  Name = "Fov player👁️",
-  Description = "", 
-  PlaceholderText = "99999",
+  Name = "Velocidade",
+  Description = "Define a velocidade do player",
+  PlaceholderText = "Digite o valor",
   Callback = function(Value)
-    -- Armazena o valor do TextBox em uma variável global/local
-    fovValue = tonumber(Value) or 70
+    speedValue = tonumber(Value) or defaultWalkSpeed
   end
 })
 
+Tab1:AddButton({"Resetar Velocidade", function()
+  speedValue = defaultWalkSpeed
+end})
 
-
-Tab1:AddButton({
-  Name = "Fov",
-  Callback = function()
-    -- Aplica o FOV na câmera do jogador
-    local camera = workspace.CurrentCamera
-    if camera and typeof(fovValue) == "number" then
-      camera.FieldOfView = fovValue
-    end
+-- Pulo
+Tab1:AddTextBox({
+  Name = "Pulo",
+  Description = "Define a altura do pulo",
+  PlaceholderText = "Digite o valor",
+  Callback = function(Value)
+    jumpValue = tonumber(Value) or defaultJumpPower
   end
 })
+
+Tab1:AddButton({"Resetar Pulo", function()
+  jumpValue = defaultJumpPower
+end})
+
+-- Gravidade
+Tab1:AddTextBox({
+  Name = "Gravidade",
+  Description = "Define a gravidade",
+  PlaceholderText = "Digite o valor",
+  Callback = function(Value)
+    gravityValue = tonumber(Value) or defaultGravity
+  end
+})
+
+Tab1:AddButton({"Resetar Gravidade", function()
+  gravityValue = defaultGravity
+end})
+
+-- FOV
+Tab1:AddTextBox({
+  Name = "FOV",
+  Description = "Define o campo de visão",
+  PlaceholderText = "Digite o valor",
+  Callback = function(Value)
+    fovValue = tonumber(Value) or defaultFOV
+  end
+})
+
+Tab1:AddButton({"Resetar FOV", function()
+  fovValue = defaultFOV
+end})
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
