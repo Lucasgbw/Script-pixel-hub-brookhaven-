@@ -3571,7 +3571,6 @@ Tab1:AddButton({"Roupa de Bloater – The Last Of Us", function(Value)
     game:GetService("ReplicatedStorage").Remotes.Wear:InvokeServer(unpack(args))
 end})
 
-local Section = Tab1:AddSection({"skins"})
 
 local Tab1 = Window:MakeTab({"vr", "airplay"})
 
