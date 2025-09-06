@@ -33,6 +33,56 @@ end
 -- Tocar o som assim que o script for executado
 playSound()
 
+-- Serviços
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- Função que adiciona imagem acima do jogador
+local function addImageAbovePlayer(player, imageId)
+    -- Espera o personagem
+    local char = player.Character or player.CharacterAdded:Wait()
+    local head = char:WaitForChild("Head")
+
+    -- Se já existir, apaga antes (evita duplicar)
+    if head:FindFirstChild("BillboardGuiImagem") then
+        head.BillboardGuiImagem:Destroy()
+    end
+
+    -- Cria o BillboardGui
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "BillboardGuiImagem"
+    billboard.Size = UDim2.new(4, 0, 4, 0)
+    billboard.StudsOffset = Vector3.new(0, 3, 0) -- altura acima da cabeça
+    billboard.AlwaysOnTop = true
+    billboard.Parent = head
+
+    -- Cria a imagem
+    local image = Instance.new("ImageLabel")
+    image.Size = UDim2.new(1, 0, 1, 0)
+    image.BackgroundTransparency = 1
+    image.Image = "rbxassetid://"..imageId
+    image.Parent = billboard
+end
+
+-- Exemplo: adiciona no próprio jogador que executou
+addImageAbovePlayer(LocalPlayer, 1234567890) -- troque pelo ID da sua imagem
+
+
+--[[
+Se você quiser que TODOS jogadores recebam a imagem,
+descomente esse trecho:
+
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        addImageAbovePlayer(player, 1234567890) -- mesmo ID para todos
+    end)
+end)
+
+for _, player in pairs(Players:GetPlayers()) do
+    addImageAbovePlayer(player, 1234567890)
+end
+]]
+
 local args = {
     "RolePlayName",
     "👾Pixel hub executado!💉🩸",
