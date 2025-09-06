@@ -67,6 +67,7 @@ local Paragraph = Tab1:AddParagraph({"Criadores 🩸", "PombaRegedit, pixel2"})
 local Tab1 = Window:MakeTab({"local player", "user"})
 
 -- Serviços
+-- Serviços
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
@@ -88,67 +89,81 @@ local fovValue = defaultFOV
 
 -- Loop para aplicar sempre
 RunService.RenderStepped:Connect(function()
-    Humanoid.WalkSpeed = speedValue
-    Humanoid.JumpPower = jumpValue
+    if Humanoid then
+        Humanoid.WalkSpeed = speedValue
+        Humanoid.JumpPower = jumpValue
+    end
     workspace.Gravity = gravityValue
     Camera.FieldOfView = fovValue
 end)
 
 -- Velocidade
 Tab1:AddTextBox({
-  Name = "Velocidade",
-  Description = "Define a velocidade do player",
-  PlaceholderText = "Digite o valor",
-  Callback = function(Value)
-    speedValue = tonumber(Value) or defaultWalkSpeed
-  end
+    Name = "Velocidade",
+    Description = "Define a velocidade do player",
+    PlaceholderText = "Digite o valor",
+    Callback = function(Value)
+        speedValue = tonumber(Value) or defaultWalkSpeed
+    end
 })
 
-Tab1:AddButton({"Resetar Velocidade", function()
-  speedValue = defaultWalkSpeed
-end})
+Tab1:AddButton({
+    Name = "Resetar Velocidade",
+    Callback = function()
+        speedValue = defaultWalkSpeed
+    end
+})
 
 -- Pulo
 Tab1:AddTextBox({
-  Name = "Pulo",
-  Description = "Define a altura do pulo",
-  PlaceholderText = "Digite o valor",
-  Callback = function(Value)
-    jumpValue = tonumber(Value) or defaultJumpPower
-  end
+    Name = "Pulo",
+    Description = "Define a altura do pulo",
+    PlaceholderText = "Digite o valor",
+    Callback = function(Value)
+        jumpValue = tonumber(Value) or defaultJumpPower
+    end
 })
 
-Tab1:AddButton({"Resetar Pulo", function()
-  jumpValue = defaultJumpPower
-end})
+Tab1:AddButton({
+    Name = "Resetar Pulo",
+    Callback = function()
+        jumpValue = defaultJumpPower
+    end
+})
 
 -- Gravidade
 Tab1:AddTextBox({
-  Name = "Gravidade",
-  Description = "Define a gravidade",
-  PlaceholderText = "Digite o valor",
-  Callback = function(Value)
-    gravityValue = tonumber(Value) or defaultGravity
-  end
+    Name = "Gravidade",
+    Description = "Define a gravidade",
+    PlaceholderText = "Digite o valor",
+    Callback = function(Value)
+        gravityValue = tonumber(Value) or defaultGravity
+    end
 })
 
-Tab1:AddButton({"Resetar Gravidade", function()
-  gravityValue = defaultGravity
-end})
+Tab1:AddButton({
+    Name = "Resetar Gravidade",
+    Callback = function()
+        gravityValue = defaultGravity
+    end
+})
 
 -- FOV
 Tab1:AddTextBox({
-  Name = "FOV",
-  Description = "Define o campo de visão",
-  PlaceholderText = "Digite o valor",
-  Callback = function(Value)
-    fovValue = tonumber(Value) or defaultFOV
-  end
+    Name = "FOV",
+    Description = "Define o campo de visão",
+    PlaceholderText = "Digite o valor",
+    Callback = function(Value)
+        fovValue = tonumber(Value) or defaultFOV
+    end
 })
 
-Tab1:AddButton({"Resetar FOV", function()
-  fovValue = defaultFOV
-end})
+Tab1:AddButton({
+    Name = "Resetar FOV",
+    Callback = function()
+        fovValue = defaultFOV
+    end
+})
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
