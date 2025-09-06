@@ -8,7 +8,7 @@ local APITO_ID = "rbxassetid://1388573684"
 
 -- Mensagens
 local messages = {
-    "pixel hub vai voltar às 15:00 da tarde.",
+    "pixel hub vai voltar às 16:00 da noite.",
     "motivo: está tendo agora skins/Bundles korblox, perna de gelo, perna de zumbi, headless!",
     "obrigado pela atenção! :D"
 }
