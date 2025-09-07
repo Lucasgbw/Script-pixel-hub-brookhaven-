@@ -66,103 +66,62 @@ local Paragraph = Tab1:AddParagraph({"Criadores 🩸", "PombaRegedit, pixel2"})
 
 local Tab1 = Window:MakeTab({"local player", "user"})
 
--- Serviços
--- Serviços
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-local Humanoid = Character:WaitForChild("Humanoid")
-local Camera = workspace.CurrentCamera
-local RunService = game:GetService("RunService")
-
--- Valores padrão
-local defaultWalkSpeed = Humanoid.WalkSpeed
-local defaultJumpPower = Humanoid.JumpPower
-local defaultGravity = workspace.Gravity
-local defaultFOV = Camera.FieldOfView
-
--- Variáveis que vamos manter em loop
-local speedValue = defaultWalkSpeed
-local jumpValue = defaultJumpPower
-local gravityValue = defaultGravity
-local fovValue = defaultFOV
-
--- Loop para aplicar sempre
-RunService.RenderStepped:Connect(function()
-    if Humanoid then
-        Humanoid.WalkSpeed = speedValue
-        Humanoid.JumpPower = jumpValue
+Tab1:AddSlider({
+  Name = "velocidade 🏁",
+  Min = 1,
+  Max = 100,
+  Increase = 1,
+  Default = 16,
+  Callback = function(Value)
+    -- Obtém o jogador local
+    local player = game.Players.LocalPlayer
+    -- Verifica se o personagem existe
+    if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+      -- Define a velocidade de caminhada do humanoide para o valor do slider
+      player.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = Value
     end
-    workspace.Gravity = gravityValue
-    Camera.FieldOfView = fovValue
-end)
+  end
+})
 
--- Velocidade
+Tab1:AddSlider({
+  Name = "Pulo🦘",
+  Min = 1,
+  Max = 100,
+  Increase = 1,
+  Default = 16,
+  Callback = function(Value)
+    -- Obtém o jogador local
+    local player = game.Players.LocalPlayer
+    -- Verifica se o personagem existe
+    if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+      local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+      humanoid.WalkSpeed = Value
+      humanoid.JumpPower = Value -- Agora o pulo também ajusta conforme o slider
+    end
+  end
+})
+
+local fovValue = 70 -- valor padrão do FOV
+
 Tab1:AddTextBox({
-    Name = "Velocidade",
-    Description = "Define a velocidade do player",
-    PlaceholderText = "Digite o valor",
-    Callback = function(Value)
-        speedValue = tonumber(Value) or defaultWalkSpeed
-    end
+  Name = "Fov player👁️",
+  Description = "", 
+  PlaceholderText = "99999",
+  Callback = function(Value)
+    -- Armazena o valor do TextBox em uma variável global/local
+    fovValue = tonumber(Value) or 70
+  end
 })
 
 Tab1:AddButton({
-    Name = "Resetar Velocidade",
-    Callback = function()
-        speedValue = defaultWalkSpeed
+  Name = "Fov",
+  Callback = function()
+    -- Aplica o FOV na câmera do jogador
+    local camera = workspace.CurrentCamera
+    if camera and typeof(fovValue) == "number" then
+      camera.FieldOfView = fovValue
     end
-})
-
--- Pulo
-Tab1:AddTextBox({
-    Name = "Pulo",
-    Description = "Define a altura do pulo",
-    PlaceholderText = "Digite o valor",
-    Callback = function(Value)
-        jumpValue = tonumber(Value) or defaultJumpPower
-    end
-})
-
-Tab1:AddButton({
-    Name = "Resetar Pulo",
-    Callback = function()
-        jumpValue = defaultJumpPower
-    end
-})
-
--- Gravidade
-Tab1:AddTextBox({
-    Name = "Gravidade",
-    Description = "Define a gravidade",
-    PlaceholderText = "Digite o valor",
-    Callback = function(Value)
-        gravityValue = tonumber(Value) or defaultGravity
-    end
-})
-
-Tab1:AddButton({
-    Name = "Resetar Gravidade",
-    Callback = function()
-        gravityValue = defaultGravity
-    end
-})
-
--- FOV
-Tab1:AddTextBox({
-    Name = "FOV",
-    Description = "Define o campo de visão",
-    PlaceholderText = "Digite o valor",
-    Callback = function(Value)
-        fovValue = tonumber(Value) or defaultFOV
-    end
-})
-
-Tab1:AddButton({
-    Name = "Resetar FOV",
-    Callback = function()
-        fovValue = defaultFOV
-    end
+  end
 })
 
 local Players = game:GetService("Players")
