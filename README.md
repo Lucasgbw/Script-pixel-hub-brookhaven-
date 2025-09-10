@@ -63,42 +63,57 @@ local Tab1 = Window:MakeTab({"Criadores🩸", "user"})
 local Paragraph = Tab1:AddParagraph({"Criadores 🩸", "PombaRegedit, pixel2"})
 
 
-local Tab1 = Window:MakeTab({"local player", "user"})
+local Tab1 = Window:MakeTab({"Configurações", "user"})
 
+-- Valores padrão
+local defaultWalkSpeed = 16
+local defaultJumpPower = 50
+
+-- Slider de velocidade
 Tab1:AddSlider({
-  Name = "velocidade 🏁",
+  Name = "Velocidade 🏁",
   Min = 1,
   Max = 100,
   Increase = 1,
-  Default = 16,
+  Default = defaultWalkSpeed,
   Callback = function(Value)
-    -- Obtém o jogador local
     local player = game.Players.LocalPlayer
-    -- Verifica se o personagem existe
     if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
-      -- Define a velocidade de caminhada do humanoide para o valor do slider
       player.Character:FindFirstChildOfClass("Humanoid").WalkSpeed = Value
     end
   end
 })
 
+-- Slider de pulo
 Tab1:AddSlider({
-  Name = "Pulo🦘",
+  Name = "Pulo 🦘",
   Min = 1,
-  Max = 100,
+  Max = 200, -- aumentei porque 100 era baixo pro JumpPower
   Increase = 1,
-  Default = 16,
+  Default = defaultJumpPower,
   Callback = function(Value)
-    -- Obtém o jogador local
     local player = game.Players.LocalPlayer
-    -- Verifica se o personagem existe
     if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
-      local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
-      humanoid.WalkSpeed = Value
-      humanoid.JumpPower = Value -- Agora o pulo também ajusta conforme o slider
+      player.Character:FindFirstChildOfClass("Humanoid").JumpPower = Value
     end
   end
 })
+
+-- Botão Print (debug inútil mas deixei)
+Tab1:AddButton({"Print", function(Value)
+  print("Hello World!")
+end})
+
+-- Botão para resetar tudo
+Tab1:AddButton({"Resetar Tudo", function()
+  local player = game.Players.LocalPlayer
+  if player and player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+    local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+    humanoid.WalkSpeed = defaultWalkSpeed
+    humanoid.JumpPower = defaultJumpPower
+  end
+  print("Valores resetados!")
+end})
 
 local fovValue = 70 -- valor padrão do FOV
 
@@ -237,6 +252,122 @@ spawn(function()
         end
     end
 end)
+
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+
+local player = Players.LocalPlayer
+
+-- === CONFIG ===
+local LineCount = 4
+local Radius = 7
+local LineLength = 15
+local NeonRed = Color3.fromRGB(255, 0, 60)
+local Black = Color3.fromRGB(0, 0, 0)
+local LabelText = "nome aparece aqui"
+
+-- === CROSSHAIR OBJECTS ===
+local CrosshairLines = {}
+for i = 1, LineCount do
+	local line = Drawing.new("Line")
+	line.Color = NeonRed
+	line.Thickness = 2.5
+	line.Visible = true
+	table.insert(CrosshairLines, line)
+end
+
+local Dot = Drawing.new("Circle")
+Dot.Radius = 3
+Dot.Filled = true
+Dot.Color = NeonRed
+Dot.Visible = true
+
+local DotOutline = Drawing.new("Circle")
+DotOutline.Radius = 5
+DotOutline.Filled = false
+DotOutline.Thickness = 2
+DotOutline.Color = Black
+DotOutline.Visible = true
+
+local Label = Drawing.new("Text")
+Label.Text = LabelText
+Label.Size = 18
+Label.Center = true
+Label.Outline = true
+Label.Color = NeonRed
+Label.Visible = true
+Label.Font = 2
+
+-- === MOUSE HIDING ===
+local function hideMouse()
+	UserInputService.MouseIconEnabled = false
+end
+player.CharacterAdded:Connect(function()
+	task.wait(0.5)
+	hideMouse()
+end)
+hideMouse()
+
+-- Controle de visibilidade via toggle
+local crosshairEnabled = true
+local function setCrosshairVisible(state)
+	for _, line in ipairs(CrosshairLines) do
+		line.Visible = state
+	end
+	Dot.Visible = state
+	DotOutline.Visible = state
+	Label.Visible = state
+end
+
+-- === MAIN ANIMATION LOOP ===
+local angle = 0
+RunService.RenderStepped:Connect(function()
+	if not crosshairEnabled then return end
+	local mousePos = UserInputService:GetMouseLocation()
+	local center = Vector2.new(mousePos.X, mousePos.Y)
+
+	for i, line in ipairs(CrosshairLines) do
+		local a = angle + (math.pi * 2 / LineCount) * (i - 1)
+		local from = Vector2.new(center.X + math.cos(a) * Radius, center.Y + math.sin(a) * Radius)
+		local to = Vector2.new(center.X + math.cos(a) * (Radius + LineLength), center.Y + math.sin(a) * (Radius + LineLength))
+		line.From = from
+		line.To = to
+	end
+
+	Dot.Position = center
+	DotOutline.Position = center
+	Label.Position = Vector2.new(center.X, center.Y + 28)
+	angle += 0.05
+end)
+
+-- === UI TOGGLES / TEXTBOX ===
+Tab1:AddToggle({
+	Name = "Ativar mira 🎯",
+	Default = true,
+	Callback = function(state)
+		crosshairEnabled = state
+		setCrosshairVisible(state)
+	end
+})
+
+local newName = LabelText
+Tab1:AddTextBox({
+	Name = "coloque nome da sua mira!",
+	PlaceholderText = "Digite o nome da mira aqui",
+	Callback = function(Value)
+		newName = Value
+	end
+})
+
+Tab1:AddButton({"Aplicar Nome", function()
+	LabelText = newName
+	Label.Text = LabelText
+	print("Novo nome aplicado:", LabelText)
+end})
+
+local Section = Tab1:AddSection({"Resolução de tela🖥️|em breve"})
 
 local Tab1 = Window:MakeTab({"Players list", "user"})
 
